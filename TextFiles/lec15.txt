@@ -1,0 +1,543 @@
+F28DA 2019-20 Semester 1
+
+Data Structures and Algorithms
+Lecture 15: Algorithm Design
+Manuel Maarek (Edinburgh)
+Lucine Gharibian (Dubai)
+
+F28DA 2019-20
+
+1
+
+Algorithm Design Techniques
+❑
+❑
+❑
+
+❑
+❑
+❑
+❑
+
+Brute Force
+Greedy Algorithms
+Divide and Conquer
+Dynamic Programming
+Transform and Conquer
+Backtracking
+Genetic Algorithms
+F28DA 2019-20
+
+2
+
+Brute Force
+➢
+
+Based on the problem’s statement and
+definitions of the concepts involved.
+
+Examples:
+➢ Sequential search
+➢ Exhaustive search: TSP, knapsack
+➢ Simple sorts: selection sort, bubble sort
+➢ Computing n!
+F28DA 2019-20
+
+3
+
+Greedy Algorithms
+"take what you can get now" strategy
+Work in phases.
+In each phase the currently best
+decision is made
+
+F28DA 2019-20
+
+4
+
+Greedy Algorithms - Examples
+
+• Dijkstra's algorithm
+(shortest path is weighted graphs)
+• Prim's algorithm, Kruskal's
+algorithm
+(minimal spanning tree in weighted graphs)
+
+• Coin exchange problem
+• Huffman Trees
+
+F28DA 2019-20
+
+5
+
+Divide and Conquer
+Reduce the problem to smaller problems
+(by a factor of at least 2) solved
+recursively and then combine the
+solutions
+Examples: Binary Search
+Mergesort
+Quick sort
+Tree traversal
+
+In general, problems that can be defined recursively
+F28DA 2019-20
+
+6
+
+Decrease and Conquer
+Reduce the problem to smaller
+problems solved recursively and then
+combine the solutions
+
+Examples of decrease-and-conquer algorithms:
+Insertion sort
+Topological sorting
+Binary Tree traversals: inorder, preorder and postorder
+(recursion)
+Computing the length of the longest path in a binary tree
+(recursion)
+Computing Fibonacci numbers (recursion)
+Reversing a queue (recursion)
+F28DA 2019-20
+
+7
+
+Dynamic Programming
+Bottom-Up Technique in which the smallest
+sub-instances are explicitly solved first and
+the results of these used to construct
+solutions to progressively larger subinstances.
+
+Example:
+Fibonacci numbers computed by iteration.
+F28DA 2019-20
+
+8
+
+Transform and Conquer
+The problem is modified to be more amenable to solution. In the
+second stage the problem is solved.
+•
+Problem simplification e.g. presorting
+Example: finding the two closest numbers in an array of numbers.
+Brute force solution: O(n2)
+Transform and conquer with presorting: O(nlogn)
+•
+Change in the representation
+Example: AVL trees guarantee O(nlogn) search time
+
+•
+Problem reduction
+Example: least common multiple: lcm(m,n) = (m*n)/ gcd(m,n)
+
+F28DA 2019-20
+
+9
+
+Backtracking
+Generate-and-Test methods
+
+Based on exhaustive search in
+multiple choice problems
+Typically used with depth-first state
+space search problems.
+Example: Puzzles
+
+F28DA 2019-20
+
+10
+
+Backtracking –
+State Space Search
+• initial state
+
+• goal state(s)
+• a set of intermediate states
+• a set of operators that transform one state into
+another. Each operator has preconditions and
+postconditions.
+
+• a cost function – evaluates the cost of the operations
+(optional)
+• a utility function – evaluates how close is a given
+state to the goal state (optional)
+F28DA 2019-20
+
+11
+
+Genetic Algorithms
+❑
+❑
+❑
+
+❑
+
+❑
+❑
+
+❑
+
+Search for good solutions among possible solutions
+The best possible solution may be missed
+A solution is coded by a string, also called
+chromosome. The words string and chromosome are
+used interchangeably
+A strings fitness is a measure of how good a solution it
+codes. Fitness is calculated by a fitness function
+Selection: The procedure to choose parents
+Crossover is the procedure by which two chromosomes
+mate to create a new offspring chromosome
+Mutation : with a certain probability flip a bit in the
+offspring
+F28DA 2019-20
+
+12
+
+Basic Genetic Algorithm
+1. Start: Generate random population of n
+chromosomes (suitable solutions for the problem)
+2. Fitness: Evaluate the fitness f(x) of each
+chromosome x in the population
+3. New population: Create a new population by
+repeating following steps until the new population
+is complete
+4. Test: If the end condition is satisfied, stop, and
+return the best solution in current population
+
+F28DA 2019-20
+
+13
+
+New Population
+➢ Selection: Select two parent chromosomes from a
+
+population according to their fitness
+
+➢ Crossover: With a crossover probability cross over the
+
+parents to form a new offspring (children). If no
+crossover was performed, offspring is an exact copy of
+parents.
+
+➢ Mutation: With a mutation probability mutate new
+
+offspring at each locus (position in chromosome).
+
+F28DA 2019-20
+
+14
+
+How to choose the approach?
+First, by understanding the problem, and second, by
+knowing various problems and how they are solved using
+different approaches.
+Strongly recommended reading to learn more about how
+to design algorithms:
+The Algorithm Design Manual, Steven S. Skiena
+Department of Computer Science, State University of New York
+http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK/BOOK.HTM
+
+Algorithm Design Paradigms, Paul E. Dunne
+University of Liverpool, Department of Computer Science
+http://www.csc.liv.ac.uk/~ped/teachadmin/algor/algor.html
+F28DA 2019-20
+
+15
+
+Backtracking
+❑
+❑
+❑
+
+❑
+
+How to solve a problem by search
+Generate and Test
+What is Backtracking
+Example
+
+F28DA 2019-20
+
+16
+
+The Idea
+Problem solving:
+
+search in a space of possible states.
+Target state1
+
+Initial
+state
+
+Target state2
+
+F28DA 2019-20
+
+17
+
+Generate and Test Method
+• Take a state
+• Generate next states by applying relevant rules
+
+(not all rules are applicable for a given state!)
+• Test to see if the goal state is reached.
+If yes - stop
+If no - add the generated states into a stack/queue (do
+not add if the state has already been generated) and repeat
+the procedure.
+
+To get the solution: Record the paths
+F28DA 2019-20
+
+18
+
+Search Methods
+
+✓Breadth-first vs depth-first search
+✓Exhaustive search (brute force) vs
+(constraint-based, heuristic) search
+
+informative
+
+✓Backtracking
+
+F28DA 2019-20
+
+19
+
+Backtracking
+
+• rejecting the currently reached state as a
+dead-end state,
+• going back to some previous level in the
+state-space tree/graph
+
+• proceeding with the exploration of other
+paths toward the target state
+Backtracking occurs in depth-first search
+F28DA 2019-20
+
+20
+
+Example
+Replace the letters with distinct digits
+such that the addition is correct
+
+Decide on:
+LOAN
+
++
+
+LOAN
+LOAN
+
+State representation
+Operators
+
+LOAN
+
+Constraints
+
+-------
+
+Initial state
+
+DEBT
+
+Target state
+F28DA 2019-20
+
+21
+
+Complexity Issues
+❖
+❖
+
+❖
+❖
+❖
+
+Class P problems
+Class NP problems
+NP-complete problems
+Non-NP problems
+Decidability
+
+F28DA 2019-20
+
+22
+
+Class P Problems
+➢
+
+➢
+
+➢
+
+Polynomial run time in the worst-case
+"tractable" problems
+Examples
+➢ Simple sorting algorithms
+➢ Advanced sorting algorithm
+➢ Topological Sort
+➢ Shortest Paths
+➢ Min Spanning Trees
+
+F28DA 2019-20
+
+23
+
+Class NP Problems
+NP-Problems: Problems for which there is no known
+polynomial-time algorithms, "intractable" problems
+NP means non-deterministically polynomial. If we
+have a candidate for a solution, we can verify it in
+polynomial time. The difficult part is to generate all
+possible candidates.
+Example: (the satisfiability problem) Given a boolean expression of
+n variables, find a set of variable assignments that satisfy the
+expression
+
+Obviously, P  NP, but P  NP (or P = NP) is an open question
+F28DA 2019-20
+
+24
+
+NP-Complete Problems
+An NP-Complete problem is an NP problem with the
+property that any problem in NP can be reduced to it in
+polynomial time
+In 1971 Stephen Cook showed that the satisfiability
+problem is NP-complete by proving that every other NP
+problem could be transformed to it.
+http://www.cs.toronto.edu/DCS/People/Faculty/sacook.html
+
+F28DA 2019-20
+
+25
+
+NP-Complete Problems
+Bin packing problem: How to pack or store objects of various sizes and
+shapes with a minimum of wasted space?
+
+Clique problem: A clique is a subset K of vertices in an undirected graph G
+such that every pair is joined by an edge in G. The problems are:
+Given a graph G, and an integer k, does G have a clique consisting of k
+vertices?
+Given a graph G, find a clique with as many vertices as possible.
+
+Knapsack problem: You have a knapsack with a given size and several
+objects with various sizes and values. The problem is how to fill your
+knapsack with these objects so that you have a maximum total value.
+
+Hamiltonian Cycle: a cycle that contains all nodes of the graph. Proving that
+a graph has a Hamiltonian cycle is a NP-complete problem.
+F28DA 2019-20
+
+26
+
+NP-Complete Problems
+NP problems and non-NP problems:
+For NP problems, given a candidate for a solution, we can verify it in
+polynomial time.
+For non-NP problems, we cannot verify in polynomial time whether
+a candidate for a solution is a solution or not.
+Example: the problem to prove that a graph does not have a
+Hamiltonian cycle is a non-NP problem.
+
+NP-hard problems: NP-Complete, but not necessarily in NP class
+
+F28DA 2019-20
+
+27
+
+Decidability
+
+Yes/no problems (decision problems)
+A decision problem is a question that has two possible
+answers yes or no. The question is about some input.
+
+F28DA 2019-20
+
+28
+
+Examples of Yes/No Problems
+Given a graph G and a set of vertices K, is K a clique?
+Given a graph G and a set of edges M, is M a spanning
+tree?
+Given a set of axioms (boolean expressions) and an
+expression, is the expression provable under the
+axioms?
+
+F28DA 2019-20
+
+29
+
+Decidable, semi-decidable, and undecidable
+problems
+A problem is decidable if there is an algorithm (P or
+NP) that says yes if the answer is yes, and no
+otherwise.
+A problem is semi-decidable if there is an algorithm
+that says yes if the answer is yes, however it may loop
+infinitely if the answer is no.
+A problem is undecidable if we can prove that there is
+no algorithm that will deliver an answer.
+
+F28DA 2019-20
+
+30
+
+Example of semi-decidable problem
+Given a set of axioms, prove that an expression is true.
+Problem 1: Let the axioms be:
+AvB
+AvC
+~B
+Prove A.
+To prove A we add ~A to the axioms.
+If A is true then ~A will be false and this will cause a
+contradiction - the conjunction of all axioms plus ~A will result
+in False
+(A v B)  ~A = B
+B  (A v C) = (B  A) v (B  C)
+B  ~ B = False
+F28DA 2019-20
+
+31
+
+Example of semi-decidable problem
+Problem 2: Let the axioms be:
+AvB
+AvC
+~B
+Prove ~A.
+We add A and obtain:
+(A v C)  A = A
+(A v B)  A = A
+A  ~B = A  ~B
+(A  ~B)  (A v B) = A  ~ B
+…..
+This process will never stop, because the expressions we obtain
+will always be different from False
+
+F28DA 2019-20
+
+32
+
+Example of undecidable problem
+The halting problem
+Let LOOP be a program that checks other
+programs for infinite loops:
+LOOP(P) stops and prints "yes" if P loops infinitely
+LOOP(P) enters an infinite loop if P stops
+
+What about LOOP(LOOP)?
+http://www.cgl.uwaterloo.ca/~csk/washington/halt.html
+
+F28DA 2019-20
+
+33
+
+

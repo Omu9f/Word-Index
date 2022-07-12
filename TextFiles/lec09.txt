@@ -1,0 +1,1306 @@
+F28DA 2019-20 Semester 1
+
+Data Structures and Algorithms
+Lecture 9: Graphs
+Manuel Maarek (Edinburgh)
+Lucine Gharibian (Dubai)
+SFO
+
+LAX
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+ORD
+
+DFW
+
+1
+
+Outline
+❑
+
+New data structure: Graph
+◼
+
+❑
+❑
+❑
+❑
+
+Very common and very useful data structure
+
+Graph terminology
+Basic Properties
+Graph ADT
+Graph representations
+◼
+◼
+◼
+
+Edge list
+Adjacency list
+Adjacency matrix
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+2
+
+Graphs
+❑
+
+A graph is a pair (V, E), where
+◼
+
+◼
+◼
+
+❑
+
+V is a set of nodes, called vertices
+E is a collection of pairs of vertices, called edges
+Vertices and edges are positions and store elements
+
+Example:
+◼
+◼
+
+A vertex represents an airport and stores the three-letter airport code
+An edge represents a flight route between two airports and stores the
+mileage of the route
+
+SFO
+
+PVD
+
+ORD
+LGA
+
+HNL
+
+LAX
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+DFW
+F28DA 2019-20
+
+MIA
+3
+
+Graphs: Formal Definition
+❑
+
+A graph is a pair (V, E), where
+◼
+
+◼
+
+❑
+
+V is a set of nodes, called vertices
+E is a collection of pairs of vertices, called edges
+
+In this example
+◼
+◼
+
+V ={a,b,c,d,f}
+E ={(a,c),(b,c),(c,f),(b,d),(d,f), (c,d)}
+
+d
+
+b
+a
+© 2014 Goodrich, Tamassia, Goldwasser
+
+c
+
+f
+F28DA 2019-20
+
+4
+
+Edge Types
+❑
+
+Directed edge
+◼
+
+◼
+◼
+◼
+
+❑
+
+◼
+
+unordered pair of vertices (u,v)
+e.g., a flight route
+
+Directed graph
+◼
+◼
+
+❑
+
+ORD
+
+flight
+AA 1206
+
+PVD
+
+ORD
+
+849
+miles
+
+PVD
+
+Undirected edge
+◼
+
+❑
+
+ordered pair of vertices (u,v)
+first vertex u is the origin
+second vertex v is the destination
+e.g., a flight
+
+all the edges are directed
+e.g., route network
+
+Undirected graph
+◼
+◼
+
+all the edges are undirected
+e.g., flight network
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+5
+
+Applications
+cslab1a
+
+❑
+
+Electronic circuits
+◼
+◼
+
+❑
+
+◼
+
+Printed circuit board
+Integrated circuit
+
+◼
+
+◼
+
+brown.edu
+qwest.net
+att.net
+
+Local area network
+Internet
+Web
+
+cox.net
+John
+
+Databases
+◼
+
+cs.brown.edu
+
+Highway network
+Flight network
+
+Computer networks
+◼
+
+❑
+
+math.brown.edu
+
+Transportation networks
+◼
+
+❑
+
+cslab1b
+
+Paul
+
+David
+
+Entity-relationship diagram
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+6
+
+Terminology
+❑
+
+End vertices (or endpoints) of
+an edge
+◼
+
+❑
+
+U
+
+b
+
+e
+W
+
+X has degree 5
+h and i are parallel edges
+
+h
+X
+
+c
+
+Self-loop
+◼
+
+V
+d
+
+Parallel edges
+◼
+
+❑
+
+U and V are adjacent
+
+Degree of a vertex
+◼
+
+❑
+
+a, d, and b are incident on V
+
+Adjacent vertices
+◼
+
+❑
+
+a
+
+Edges incident on a vertex
+◼
+
+❑
+
+U and V are the endpoints of a
+
+j
+Z
+
+i
+g
+
+f
+
+Y
+
+j is a self-loop
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+7
+
+Terminology (cont.)
+❑
+
+Path
+◼
+
+◼
+
+◼
+◼
+
+❑
+
+Simple path
+◼
+
+❑
+
+sequence of alternating
+vertices and edges
+begins with a vertex
+ends with a vertex
+each edge is preceded and
+followed by its endpoints
+path such that all its vertices
+and edges are distinct
+
+Examples
+◼
+◼
+
+P1=(V,b,X,h,Z) is a simple path
+P2=(U,c,W,e,X,g,Y,f,W,d,V) is a
+path that is not simple
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+a
+U
+c
+
+V
+
+b
+
+d
+P2
+
+P1
+X
+
+e
+
+W
+
+h
+
+Z
+
+g
+
+f
+
+Y
+
+8
+
+Terminology (cont.)
+❑
+
+Cycle
+◼
+
+◼
+
+❑
+
+Simple cycle
+◼
+
+❑
+
+circular sequence of alternating
+vertices and edges
+each edge is preceded and
+followed by its endpoints
+
+cycle such that all its vertices
+and edges are distinct
+
+a
+U
+
+Examples
+◼
+
+◼
+
+C1=(V,b,X,g,Y,f,W,c,U,a,) is a
+simple cycle
+C2=(U,c,W,e,X,g,Y,f,W,d,V,a,)
+is a cycle that is not simple
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+c
+
+V
+
+b
+
+d
+C2
+
+X
+e
+
+C1
+g
+
+W
+f
+
+h
+
+Z
+
+Y
+
+9
+
+Properties
+Property 1
+
+Sv deg(v) = 2m
+
+Notation
+n
+m
+deg(v)
+
+Proof: each edge is
+counted twice
+
+Property 2
+
+number of vertices
+number of edges
+degree of vertex v
+
+Example
+◼ n = 4
+◼ m = 6
+◼ deg(v) = 3
+
+In an undirected graph
+with no self-loops and
+no multiple edges
+m  n (n - 1)/2
+Proof: each vertex has
+degree at most (n - 1)
+
+What is the bound for a
+directed graph?
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+10
+
+Euler Cycle and the 7
+Bridges of Koenigsberg
+▪ The year is 1735. City of Koenigsberg has a
+funny layout of 7 bridges across the river
+▪ Citizens of Koenigsberg are wondering if it’s possible to
+walk across each bridge exactly once and return to
+same starting point?
+▪ They think that it’s impossible, but no one can prove it
+▪ Eulerian Cycle: path that traverses every edge exactly
+once and returns to the first vertex
+▪ Euler proves a theorem: A graph has a Eulerian Cycle if
+and only iff all vertices have even degree
+
+11
+
+Vertices and Edges
+❑
+
+❑
+
+❑
+
+A graph is a collection of vertices and edges.
+We model the abstraction as a combination of three
+data types: Vertex, Edge, and Graph.
+A Vertex is a lightweight object that stores an
+arbitrary element provided by the user (e.g., an
+airport code)
+◼
+
+❑
+
+We assume it supports a method, element(), to retrieve the stored
+element.
+
+An Edge stores an associated object (e.g., a flight
+number, travel distance, cost), retrieved with the
+element( ) method.
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+12
+
+Graph ADT
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+13
+
+Edge List Structure
+❑
+
+Vertex object
+◼
+
+◼
+
+❑
+
+Edge object
+◼
+◼
+
+◼
+◼
+
+❑
+
+element
+origin vertex object
+destination vertex object
+reference to position in
+edge sequence
+
+Vertex sequence
+◼
+
+❑
+
+element
+reference to position in
+vertex sequence
+
+sequence of vertex
+objects
+
+Edge sequence
+◼
+
+sequence of edge objects
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+14
+
+Graph Representation: Edge List
+Structure, Real picture
+u
+e
+
+▪ Each vertex object has a “back
+pointer” reference to the node
+which references it in the
+linked list of vertices ( these
+references are in thick red in
+the example below )
+▪ Space: O(n)
+▪ Each Edge object has a “back
+pointer” reference to the node
+which references it in the
+linked list of edges (thick
+green references in the
+example below)
+▪ Space: O(m)
+
+g
+f
+
+v
+
+u
+
+▪ Total space: O(n+m)
+15
+
+f
+
+z
+
+z
+
+w
+
+v
+
+e
+
+w
+
+h
+
+g
+
+h
+
+Graph Representation: Edge List
+Structure
+v
+
+(u,v)
+
+J
+J
+J
+L
+J
+J
+L
+
+u
+
+(v,w)
+
+w
+
+z
+
+(u,w)
+
+(w,z)
+
+Operation
+
+Time
+
+vertices
+
+O(n)
+
+edges
+
+O(m)
+
+endVertices(e), opposite(v,e)
+
+O(1)
+
+incidentEdges(v), areAdjacent(v,w)
+
+O(m)
+
+replace(v,o), replace(e,o), insertVertex(o)
+
+O(1)
+
+insertEdge(u,v),removeEdge(e)
+
+O(1)
+
+removeVertex(v)
+
+O(m)
+
+▪ Advantages:
+▪ easy to
+
+implement
+▪ Disadvantages:
+▪ inefficient
+
+incidentEdges,
+areAdjacent,
+removeVertex,
+
+take O(m), since
+we have to
+examine the
+entire edge
+sequence
+
+How to Improve
+Edge List Structure?
+
+v
+
+(u,v)
+
+u
+
+(v,w)
+
+u
+
+v
+
+w
+
+(u,w)
+
+w
+
+z
+
+(w,z)
+
+▪ The problem with edge list structure is that each vertex does not
+know which edges are incident on it
+▪ Solution: put pointers (reference) from each vertex to the edge
+object incident on this vertex
+▪ Each vertex can have lots of edges incident on it
+▪ Thus we need a sequence of incident vertices
+▪ this sequence is called Adjacency List, because it’s usually
+implemented as a list
+
+z
+
+Graph Representation:
+Adjacency List
+
+u
+
+v
+(u,v) (v,w)
+
+w
+(w,z)
+
+(u,v) (u,w) (u,w) (v,w) (w,z)
+
+v
+
+(u,v)
+
+u
+
+(v,w)
+
+w
+
+(u,w)
+
+z
+
+(w,z)
+
+▪ How to remove edge (u,v) efficiently?
+▪ First remove edge from the edge list, O(1)
+▪ Then we have to remove pointer to edge (u,v) from the
+
+adjacency list of u and the adjacency list of v
+▪ This will take O((deg(v)+deg(w)), which is not bad, but worse
+than O(1), complexity of the Edge List graph representation
+▪ Solution: “back link” each edge (u,v) in the Edge Sequence to
+where it is referenced in the adjacency list of u and v
+
+z
+
+Graph Representation:
+Adjacency List Structure
+
+u
+
+v
+(u,v) (v,w)
+
+w
+(w,z)
+
+(u,v) (u,w) (u,w) (v,w) (w,z)
+
+v
+
+(u,v)
+
+u
+
+(v,w)
+
+w
+
+z
+
+(u,w)
+
+(w,z)
+
+▪ Space requirement:
+
+▪ O(n) for the vertex sequence, O(m) for the edge sequence
+▪ For vertex v, O(deg(v)) for the adjacency list of v.
+▪ For all adjacency lists, O(Sv deg(v) ) = 2m = O(m) by
+property 1 from the beginning of lecture
+▪ For the “back links” O(m)
+▪ Thus total
+space is O(n + m)
+19
+
+z
+
+Adjacency List Structure
+❑
+
+Incidence sequence
+for each vertex
+◼
+
+❑
+
+sequence of
+references to edge
+objects of incident
+edges
+
+Augmented edge
+objects
+◼
+
+references to
+associated
+positions in
+incidence
+sequences of end
+vertices
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+20
+
+Adjacency List
+Structure
+
+(u,v) (v,w)
+
+v
+
+(u,v)
+
+Operation
+
+Time
+
+vertices
+
+O(n)
+
+edges
+
+O(m)
+
+endVertices, opposite
+
+O(1)
+
+incidentEdges(v)
+
+O(deg(v))
+
+areAdjacent(v,w )
+
+O(min(deg(v),deg(w))
+
+replace
+
+O(1)
+
+insertVertex,insertEdge
+
+O(1)
+
+removeEdge(v,w )
+
+O(1)
+
+removeVertex
+
+O((deg(v))21
+
+(w,z)
+
+(u,v) (u,w) (u,w) (v,w) (w,z)
+
+J
+J
+J
+J
+J
+J
+J
+J
+J
+
+u
+
+(v,w)
+
+w
+
+(u,w)
+
+z
+
+(w,z)
+
+▪ Advantages:
+▪ More efficient
+
+than edge list
+▪ Disadvantages:
+▪ More complicated
+to implement
+
+Graph Representation: Traditional
+Adjacency Matrix Structure
+Integer key (index) associated with
+vertex, indexes from 0 to n
+❑ 2 dimensional boolean adjacency
+array M of size n by n
+❑ M[v,w] = true means that there is
+an edge between v and w
+❑ M[v,w] = false means that there is
+no edge between v and w
+▪ Space requirement: O(n2)
+▪ Therefore adjacency matrix should
+be used only for dense graphs
+▪ graph is dense if m is O(n2), that is
+
+u
+
+❑
+
+it has a lot of edges
+▪ If m is O(n), than graph is said to
+be sparse
+22
+
+v
+
+w
+
+v
+
+u
+
+w
+
+z
+
+z
+
+v
+
+false true true false
+
+u
+
+true false true false
+
+w true true false true
+
+z false false true false
+
+Graph Representation: Adjacency
+Matrix Structure
+Edge list structure
+❑ Integer key (index)
+associated with
+vertex
+▪ 2D adjacency array
+❑
+
+v
+
+u
+
+(u,v)
+
+▪ Reference to edge
+object for adjacent
+vertices
+▪ Null for non
+nonadjacent
+vertices
+
+(v,w)
+
+v
+v
+u
+w
+
+▪ Space requirement: O(n2)
+
+z
+23
+
+w
+
+z
+
+(u,w)
+
+u
+
+w
+
+(w,z)
+
+z
+
+Adjacency Matrix Structure
+❑
+❑
+
+Edge list structure
+Augmented vertex
+objects
+◼
+
+❑
+
+2D-array adjacency
+array
+◼
+
+◼
+
+❑
+
+Integer key (index)
+associated with vertex
+
+Reference to edge
+object for adjacent
+vertices
+Null for non
+nonadjacent vertices
+
+The “old fashioned”
+version just has 0 for
+no edge and 1 for edge
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+24
+
+Graph Representation: Adjacency
+Matrix Structure
+v
+
+u
+
+(u,v)
+
+J
+J
+J
+L
+J
+J
+L
+
+Operation
+
+Time
+
+vertices
+
+O(n)
+
+edges
+
+O(m)
+
+endVertices(e), opposite(e,v)
+
+O(1)
+
+incidentEdges(v)
+
+O(n)
+
+replace, areAdjacent(v,w)
+
+O(1)
+
+insertEdge(v,w), removeEdge(e)
+
+O(1)
+
+insertVertex(v), removeVertex(v)
+
+O(n2)
+25
+
+(v,w)
+
+v
+
+v
+u
+w
+z
+
+w
+
+z
+
+(u,w)
+
+u
+
+w
+
+(w,z)
+
+z
+
+Performance
+▪ n vertices, m edges
+▪ no parallel edges
+▪ no self-loops
+
+Edge
+List
+
+Adjacency
+List
+
+Adjacency
+Matrix
+
+Space
+
+n+m
+
+n+m
+
+n2
+
+incidentEdges(v)
+areAdjacent (v, w)
+
+m
+m
+
+deg(v)
+min(deg(v), deg(w))
+
+n
+1
+
+insertVertex(o)
+
+1
+
+1
+
+n2
+
+insertEdge(v, w, o)
+
+1
+
+1
+
+1
+
+removeVertex(v)
+removeEdge(e)
+
+m
+1
+
+deg(v)
+1
+
+n2
+1
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+26
+
+Summary
+❑
+
+Edge list structure
+◼
+◼
+◼
+
+❑
+
+Adjacency list
+◼
+
+◼
+
+❑
+
+To be used only out of laziness
+There are no lazy people in this class. Why did we study it?
+It’s a good starting point (as well as part of) for the other data
+structures
+Good performance for any graph
+Most complicated to implement
+
+2D adjacency array, to be used when:
+◼ Good choice only for dense graphs (m is O(n2), that is it has a lot
+◼
+
+◼
+
+of edges)
+And used only in case when the set of vertices stays fixed (no
+vertex insertion or deletion)
+In cases when the above 2 conditions hold, then the adjacency
+array is the best choice
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+27
+
+Further reading
+❑
+
+Data Structures and Algorithms in Java, 6th
+edition, by M. T. Goodrich, R. Tamassia, and
+M. H. Goldwasser, Wiley, 2014
+◼
+
+❑
+
+Chapter 14
+
+Data Structures and Algorithm Analysis, by
+Clifford A. Shaffer, 2013
+◼
+
+Chapter 11
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+28
+
+

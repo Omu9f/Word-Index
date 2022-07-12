@@ -1,0 +1,1169 @@
+F28DA 2019-20 Semester 1
+
+Data Structures and Algorithms
+Lecture 2: Analysis of Algorithms
+Manuel Maarek (Edinburgh)
+Lucine Gharibian (Dubai)
+
+Input
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Algorithm
+
+F28DA 2019-20
+
+Output
+
+1
+
+Outline
+❑
+❑
+
+Pseudocode
+Theoretical analysis of running time
+◼
+◼
+◼
+
+❑
+
+Primitive operations
+Estimating running time
+Growth rate
+
+Asymptotic algorithm analysis
+◼
+
+◼
+
+Big-Oh notation
+Big-Oh rules
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+2
+
+Running Time
+
+❑
+
+❑
+
+❑
+
+Most algorithms transform
+input objects into output
+objects.
+The running time of an
+algorithm typically grows
+with the input size.
+Average case time is often
+difficult to determine.
+We focus on the worst case
+running time.
+◼
+◼
+
+best case
+average case
+worst case
+120
+100
+
+Running Time
+
+❑
+
+80
+60
+40
+20
+0
+
+Easier to analyze
+Crucial to applications such as
+games, finance and robotics
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+1000
+
+2000
+
+3000
+
+4000
+
+Input Size
+
+3
+
+Experimental
+Studies
+
+❑
+
+❑
+
+Write a program
+implementing the
+algorithm
+Run the program with
+inputs of varying size
+and composition,
+noting the time
+needed:
+Plot the results
+
+8000
+7000
+
+Time (ms)
+
+❑
+
+9000
+
+6000
+5000
+4000
+3000
+2000
+1000
+0
+0
+
+50
+
+100
+
+Input Size
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+4
+
+Limitations of Experiments
+❑
+
+❑
+
+❑
+
+It is necessary to implement the
+algorithm, which may be difficult
+Results may not be indicative of the
+running time on other inputs not included
+in the experiment.
+In order to compare two algorithms, the
+same hardware and software
+environments must be used
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+5
+
+Theoretical Analysis
+❑
+
+❑
+
+❑
+❑
+
+Uses a high-level description of the
+algorithm instead of an implementation
+Characterizes running time as a
+function of the input size, n
+Takes into account all possible inputs
+Allows us to evaluate the speed of an
+algorithm independent of the
+hardware/software environment
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+6
+
+Pseudocode
+❑
+❑
+
+❑
+❑
+
+❑
+
+High-level description of an algorithm
+More structured than English prose
+Less detailed than a program
+Preferred notation for describing
+algorithms
+Hides program design issues
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+7
+
+Pseudocode Details
+❑
+
+Control flow
+◼
+◼
+◼
+◼
+◼
+
+❑
+
+❑
+
+if … then … [else …]
+while … do …
+repeat … until …
+for … do …
+Indentation replaces braces
+
+Method declaration
+
+method (arg [, arg…])
+❑
+
+Return value
+return expression
+
+❑
+
+Expressions:
+ Assignment
+
+= Equality testing
+
+Algorithm method (arg [, arg…])
+Input …
+Output …
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Method call
+
+n2 Superscripts and other
+mathematical
+formatting allowed
+
+F28DA 2019-20
+
+8
+
+The Random Access Machine
+(RAM) Model
+A RAM consists of
+❑ A CPU
+❑ An potentially unbounded bank
+of memory cells, each of which
+can hold an arbitrary number or
+character
+❑ Memory cells are numbered and
+accessing any cell in memory
+takes unit time
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+1
+0
+
+2
+
+9
+
+Seven Important Functions
+Seven functions that
+often appear in algorithm 1E+30
+1E+28
+analysis:
+1E+26
+◼
+◼
+◼
+◼
+◼
+◼
+
+◼
+
+❑
+
+Constant  1
+Logarithmic  log n
+Linear  n
+N-Log-N  n log n
+Quadratic  n2
+Cubic  n3
+Exponential  2n
+
+In a log-log chart, the
+slope of the line
+corresponds to the
+growth rate
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+T (n )
+
+❑
+
+1E+24
+1E+22
+1E+20
+1E+18
+1E+16
+1E+14
+1E+12
+1E+10
+1E+8
+1E+6
+1E+4
+1E+2
+1E+0
+1E+0
+
+Cubic
+Quadratic
+Linear
+
+1E+2
+
+1E+4
+
+1E+6
+
+1E+8
+
+1E+10
+
+n
+F28DA 2019-20
+
+10
+
+Functions Graphed
+Using “Normal” Scale
+g(n) = 1
+
+Slide by Matt Stallmann
+included with permission.
+
+g(n) = n lg n
+
+g(n) = 2n
+
+g(n) = n2
+g(n) = lg n
+
+g(n) = n
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+g(n) = n3
+F28DA 2019-20
+
+11
+
+Primitive Operations
+❑
+
+❑
+❑
+
+❑
+
+❑
+
+Basic computations
+performed by an algorithm
+Identifiable in pseudocode
+Largely independent from the
+programming language
+Exact definition not important
+(we will see why later)
+Assumed to take a constant
+amount of time in the RAM
+model
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+❑
+
+F28DA 2019-20
+
+Examples:
+◼
+
+◼
+
+◼
+
+◼
+◼
+
+Evaluating an
+expression
+Assigning a value
+to a variable
+Indexing into an
+array
+Calling a method
+Returning from a
+method
+
+12
+
+Counting Primitive Operations
+❑
+
+By inspecting the pseudocode, we can determine the maximum number of
+primitive operations executed by an algorithm, as a function of the input size
+
+Step
+
+3:
+4:
+5:
+6:
+7:
+8:
+
+2 ops
+2 ops
+2n ops
+2(n-1) ops
+0 to n-1 ops
+1 op
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Primitives:
+-Evaluate an expression
+-Assign a value to a variable
+-Index into an array
+-Call a method
+-Return from a method
+
+Total ops worst case: 5n+2
+(other calculations possible)
+F28DA 2019-20
+
+13
+
+Estimating Running Time
+❑
+
+Algorithm arrayMax executes 5n + 5 primitive
+operations in the worst case, 4n + 5 in the best
+case. Define:
+a = Time taken by the fastest primitive operation
+b = Time taken by the slowest primitive operation
+
+❑
+
+❑
+
+Let T(n) be worst-case time of arrayMax. Then
+a (4n + 5)  T(n)  b(5n + 5)
+Hence, the running time T(n) is bounded by two
+linear functions
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+14
+
+Growth Rate of Running Time
+❑
+
+Changing the hardware/ software
+environment
+◼
+
+◼
+
+❑
+
+Affects T(n) by a constant factor, but
+Does not alter the growth rate of T(n)
+
+The linear growth rate of the running
+time T(n) is an intrinsic property of
+algorithm arrayMax
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+15
+
+Slide by Matt Stallmann
+included with permission.
+
+Why Growth Rate Matters
+if runtime
+is...
+
+time for n + 1
+
+time for 2 n
+
+time for 4 n
+
+c lg n
+
+c lg (n + 1)
+
+c (lg n + 1)
+
+c(lg n + 2)
+
+cn
+
+c (n + 1)
+
+2c n
+
+4c n
+
+c n lg n
+
+~ c n lg n
++ cn
+
+2c n lg n +
+2cn
+
+4c n lg n +
+4cn
+
+c n2
+
+~ c n2 + 2c n
+
+4c n2
+
+16c n2
+
+c n3
+
+~ c n3 + 3c n2
+
+8c n3
+
+64c n3
+
+c 2n
+
+c 2 n+1
+
+c 2 2n
+
+c 2 4n
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+runtime
+quadruples
+when
+problem
+size doubles
+
+16
+
+Slide by Matt Stallmann
+included with permission.
+
+Comparison of Two Algorithms
+insertion sort is
+n2 / 4
+merge sort is
+2 n lg n
+
+sort a million items?
+while
+
+insertion sort takes
+roughly 70 hours
+
+merge sort takes
+roughly 40 seconds
+
+This is a slow machine, but if
+100 x as fast then it’s 40 minutes
+versus less than 0.5 seconds
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+17
+
+Constant Factors
+Quadratic
+Quadratic
+Linear
+Linear
+
+T (n )
+
+1E+26
+❑ The growth rate is
+1E+24
+1E+22
+not affected by
+1E+20
+◼ constant factors or
+1E+18
+1E+16
+◼ lower-order terms
+1E+14
+1E+12
+❑ Examples
+1E+10
+◼ 102n + 105 is a linear
+1E+8
+function
+1E+6
+1E+4
+◼ 105n2 + 108n is a
+1E+2
+quadratic function
+1E+0
+1E+0
+
+1E+2
+
+1E+4
+
+1E+6
+
+1E+8
+
+1E+10
+
+n
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+18
+
+Big-Oh Notation
+10,000
+
+❑
+
+❑
+
+Given functions f(n) and
+g(n), we say that f(n) is
+1,000
+O(g(n)) if there are
+positive constants
+100
+c and n0 such that
+
+f(n)  cg(n) for n  n0
+Example: 2n + 10 is O(n)
+◼
+◼
+◼
+◼
+
+2n + 10  cn
+(c − 2) n  10
+n  10/(c − 2)
+Pick c = 3 and n0 = 10
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+3n
+2n+10
+n
+
+10
+
+1
+1
+
+10
+
+100
+
+1,000
+
+n
+
+F28DA 2019-20
+
+19
+
+Big-Oh Example
+1,000,000
+❑
+
+n^2
+
+Example: the function
+100,000
+n2 is not O(n)
+◼
+◼
+◼
+
+n2  cn
+nc
+The above inequality
+cannot be satisfied
+since c must be a
+constant
+
+100n
+10n
+n
+
+10,000
+1,000
+100
+10
+1
+1
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+10
+
+n
+
+100
+
+1,000
+
+20
+
+More Big-Oh Examples
+❑
+
+7n - 2
+
+7n-2 is O(n)
+need c > 0 and n0  1 such that 7 n - 2  c n for n  n0
+this is true for c = 5 and n0 = 1
+
+❑
+
+3 n3 + 20 n2 + 5
+
+3 n3 + 20 n2 + 5 is O(n3)
+need c > 0 and n0  1 such that 3 n3 + 20 n2 + 5  c n3 for n  n0
+this is true for c = 4 and n0 = 21
+
+❑
+
+3 log n + 5
+3 log n + 5 is O(log n)
+need c > 0 and n0  1 such that 3 log n + 5  c log n for n  n0
+this is true for c = 8 and n0 = 2
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+21
+
+Big-Oh and Growth Rate
+❑
+
+❑
+
+❑
+
+The big-Oh notation gives an upper bound on the
+growth rate of a function
+The statement “f(n) is O(g(n))” means that the growth
+rate of f(n) is no more than the growth rate of g(n)
+We can use the big-Oh notation to rank functions
+according to their growth rate
+
+f(n) is O(g(n))
+
+g(n) is O(f(n))
+
+g(n) grows more
+
+Yes
+
+No
+
+f(n) grows more
+
+No
+Yes
+
+Yes
+Yes
+
+Same growth
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+22
+
+Big-Oh Rules
+❑
+
+If is f(n) a polynomial of degree d, then f(n) is
+O(nd), i.e.,
+1.
+
+2.
+
+❑
+
+Use the smallest possible class of functions
+◼
+
+❑
+
+Drop lower-order terms
+Drop constant factors
+Say “2n is O(n)” instead of “2n is O(n2)”
+
+Use the simplest expression of the class
+◼
+
+Say “3n + 5 is O(n)” instead of “3n + 5 is O(3n)”
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+23
+
+Asymptotic Algorithm Analysis
+❑
+
+❑
+
+The asymptotic analysis of an algorithm determines
+the running time in big-Oh notation
+To perform the asymptotic analysis
+◼
+
+◼
+
+❑
+
+Example:
+◼
+
+❑
+
+We find the worst-case number of primitive operations
+executed as a function of the input size
+We express this function with big-Oh notation
+We say that algorithm arrayMax “runs in O(n) time”
+
+Since constant factors and lower-order terms are
+eventually dropped anyhow, we can disregard them
+when counting primitive operations
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+24
+
+Computing Prefix Averages
+We further illustrate
+asymptotic analysis with
+two algorithms for prefix
+averages
+❑ The i-th prefix average of
+an array X is average of the
+first (i + 1) elements of X:
+A[i] = (X[0] + X[1] + … + X[i])/(i+1)
+❑
+
+❑
+
+Computing the array A of
+prefix averages of another
+array X has applications to
+financial analysis
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+35
+
+X
+A
+
+30
+25
+20
+15
+10
+5
+0
+
+F28DA 2019-20
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+25
+
+Prefix Averages (Quadratic)
+The following algorithm computes prefix averages in
+quadratic time by applying the definition
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+26
+
+Arithmetic Progression
+❑
+
+❑
+
+The running time of
+prefixAverage1 is
+O(1 + 2 + …+ n)
+The sum of the first n
+integers is n(n + 1) / 2
+◼
+
+❑
+
+There is a simple visual
+proof of this fact
+
+Thus, algorithm
+prefixAverage1 runs in
+O(n2) time
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+7
+6
+5
+4
+3
+2
+1
+0
+1
+F28DA 2019-20
+
+2
+
+3
+
+4
+
+5
+
+6
+27
+
+Prefix Averages 2 (Linear)
+The following algorithm uses a running summation to
+improve the efficiency
+
+Algorithm prefixAverage2 runs in O(n) time!
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+28
+
+Math you need to Review
+❑
+
+❑
+❑
+❑
+❑
+
+Summations
+Powers
+Logarithms
+Proof techniques
+Basic probability
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+❑
+
+❑
+
+Properties of powers:
+a(b+c) = aba c
+abc = (ab)c
+ab /ac = a(b-c)
+b = a logab
+bc = a c*logab
+Properties of logarithms:
+logb(xy) = logbx + logby
+logb (x/y) = logbx - logby
+logbxa = alogbx
+logba = logxa/logxb
+F28DA 2019-20
+
+29
+
+Relatives of Big-Oh
+big-Omega
+◼
+
+f(n) is (g(n)) if there is a constant c > 0
+and an integer constant n0  1 such that
+f(n)  c g(n) for n  n0
+
+big-Theta
+◼
+
+f(n) is (g(n)) if there are constants c’ > 0 and
+c’’ > 0 and an integer constant n0  1 such that
+c’g(n)  f(n)  c’’g(n) for n  n0
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+30
+
+Intuition for Asymptotic
+Notation
+big-Oh
+◼ f(n) is O(g(n)) if f(n) is asymptotically
+less than or equal to g(n)
+big-Omega
+◼ f(n) is (g(n)) if f(n) is asymptotically
+greater than or equal to g(n)
+big-Theta
+◼ f(n) is (g(n)) if f(n) is asymptotically
+equal to g(n)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+31
+
+Example Uses of the
+Relatives of Big-Oh
+◼
+
+5n2 is (n2)
+
+◼
+
+f(n) is (g(n)) if there is a constant c > 0 and an integer constant n0  1
+such that f(n)  c g(n) for n  n0
+let c = 5 and n0 = 1
+5n2 is (n)
+f(n) is (g(n)) if there is a constant c > 0 and an integer constant n0  1
+such that f(n)  c g(n) for n  n0
+let c = 1 and n0 = 1
+
+◼
+
+5n2 is (n2)
+f(n) is (g(n)) if it is (n2) and O(n2). We have already seen the former,
+for the latter recall that f(n) is O(g(n)) if there is a constant c > 0 and an
+integer constant n0  1 such that f(n) < c g(n) for n  n0
+Let c = 5 and n0 = 1
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+32
+
+Summary
+❑
+❑
+❑
+
+Pseudocode
+Big-Oh notation and rules
+Analysis and comparison of algorithms
+◼
+
+◼
+
+Time-complexity
+Space-complexity
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+33
+
+Further reading
+❑
+
+Data Structures and Algorithms in Java, 6th
+edition, by M. T. Goodrich, R. Tamassia, and
+M. H. Goldwasser, Wiley, 2014
+◼
+
+❑
+
+Chapter 4
+
+Data Structures and Algorithm Analysis, by
+Clifford A. Shaffer, 2013
+◼
+
+Chapter 3
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+34
+
+

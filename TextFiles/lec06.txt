@@ -1,0 +1,1868 @@
+F28DA 2019-20 Semester 1
+
+Data Structures and Algorithms
+Lecture 6: Search Trees
+Manuel Maarek (Edinburgh)
+Lucine Gharibian (Dubai)
+
+6
+
+v
+
+8
+
+3
+
+z
+4
+
+<
+2
+1
+
+6
+9
+
+>
+4 =
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+8
+
+F28DA 2019-20
+
+1
+
+Outline
+❑
+
+Trees (revision)
+◼
+
+◼
+◼
+
+❑
+❑
+
+Tree ADT
+Tree traversals
+Tree implementation
+
+Binary Search Trees
+AVL Trees (balanced trees)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+2
+
+Trees (revision)
+Mammal
+
+Dog
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Pig
+
+F28DA 2019-20
+
+Cat
+
+3
+
+Tree Terminology
+❑
+❑
+
+❑
+
+❑
+
+❑
+
+❑
+
+❑
+
+Root: node without parent (A)
+❑
+Internal node: node with at least
+one child (A, B, C, F)
+External node (a.k.a. leaf ): node
+without children (E, I, J, K, G, H, D)
+Ancestors of a node: parent,
+grandparent, grand-grandparent,
+etc.
+Depth of a node: number of
+ancestors
+E
+Height of a tree: maximum depth
+of any node (3)
+Descendant of a node: child,
+I
+grandchild, grand-grandchild, etc.
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+Subtree: tree consisting of
+a node and its
+descendants
+A
+
+B
+
+C
+
+F
+
+J
+
+G
+
+K
+
+D
+
+H
+
+subtree
+4
+
+Tree ADT
+❑
+
+◼
+
+◼
+◼
+
+◼
+
+integer size()
+boolean isEmpty()
+Iterator iterator()
+Iterable nodes()
+
+◼
+
+◼
+◼
+◼
+
+boolean isExternal(n)
+(node without children)
+
+◼
+
+boolean isRoot(n)
+(node without parent)
+
+Accessor methods:
+◼
+
+boolean isInternal(n)
+(node with children)
+
+Generic methods:
+◼
+
+❑
+
+Query methods:
+
+node root()
+node parent(n)
+Iterable children(n)
+Integer numChildren(n)
+
+Not all of these methods are
+required for a Tree ADT to
+represent trees
+▪ For instance the parent method
+
+might not be needed if the tree is
+only traversed from root to leaf
+
+Additional update methods may be
+defined by data structures
+implementing the Tree ADT
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+5
+
+Tree Preorder Traversal
+❑
+
+❑
+
+❑
+
+A traversal visits the nodes of a
+tree in a systematic manner
+In a preorder traversal, a node is
+visited before its descendants
+Application: print a structured
+document
+
+1
+
+Algorithm preOrder(v)
+visit(v)
+for each child w of v
+preorder (w)
+
+Make Money Fast!
+
+2
+
+5
+
+1. Motivations
+
+9
+2. Methods
+
+3
+
+4
+
+1.1 Greed
+
+1.2 Avidity
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+6
+2.1 Stock
+Fraud
+F28DA 2019-20
+
+7
+2.2 Ponzi
+Scheme
+
+References
+
+8
+2.3 Bank
+Robbery
+6
+
+Tree Postorder Traversal
+❑
+
+❑
+
+In a postorder traversal, a
+node is visited after its
+descendants
+Application: compute space
+used by files in a directory and
+its subdirectories
+9
+
+Algorithm postOrder(v)
+for each child w of v
+postOrder (w)
+visit(v)
+
+cs16/
+
+3
+
+8
+
+7
+
+homeworks/
+
+todo.txt
+1K
+
+programs/
+
+1
+
+2
+
+h1c.doc
+3K
+
+h1nc.doc
+2K
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+4
+DDR.java
+10K
+F28DA 2019-20
+
+5
+Stocks.java
+25K
+
+6
+Robot.java
+20K
+7
+
+Tree Inorder Traversal
+❑
+
+❑
+
+In an inorder traversal a
+node is visited after its left
+subtree and before its right
+subtree
+Application: draw a binary
+tree
+◼
+
+◼
+
+Algorithm inOrder(v)
+if left (v) ≠ null
+inOrder (left (v))
+visit(v)
+if right(v) ≠ null
+inOrder (right (v))
+
+x(v) = inorder rank of v
+y(v) = depth of v
+
+6
+
+2
+
+8
+
+1
+
+4
+3
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+7
+
+9
+
+5
+F28DA 2019-20
+
+8
+
+Tree Euler Tour Traversal
+❑
+❑
+❑
+
+Generic traversal of a binary tree
+Includes a special cases the preorder, postorder and inorder traversals
+Walk around the tree and visit each node three times:
+◼ on the left (preorder)
+◼ from below (inorder)
+◼ on the right (postorder)
+
++
+
+L
+
+2
+
+
+
+
+
+R
+
+B
+
+5
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+3
+
+2
+
+1
+
+F28DA 2019-20
+
+9
+
+Linked Structure for Trees
+❑
+
+A node is represented by
+an object storing
+◼
+◼
+◼
+
+❑
+
+Element
+Parent node
+Sequence of children
+nodes
+
+
+B
+
+
+
+Node objects implement
+the Tree ADT
+
+A
+
+B
+D
+
+A
+C
+
+
+D
+
+F
+
+F
+
+
+E
+C
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+
+E
+10
+
+Binary Search Trees (BST)
+6
+
+<
+2
+1
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+9
+
+>
+4 =
+
+F28DA 2019-20
+
+8
+
+11
+
+Binary Trees
+❑
+
+A binary tree is a tree with the
+following properties:
+◼
+
+◼
+
+❑
+
+❑
+
+❑
+
+◼
+
+Each internal node has at most two
+children (exactly two for proper
+binary trees)
+The children of a node are an
+ordered pair
+
+◼
+◼
+
+◼
+
+a tree consisting of a single node, or
+a tree whose root has an ordered
+pair of children, each of which is a
+binary tree
+
+arithmetic expressions
+decision processes
+searching
+A
+
+We call the children of an internal
+node left child and right child
+Alternative recursive definition: a
+binary tree is either
+◼
+
+Applications:
+
+B
+
+C
+
+D
+
+E
+
+H
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+F
+
+G
+
+I
+12
+
+BinaryTree ADT
+❑
+
+❑
+
+The BinaryTree ADT
+extends the Tree
+ADT, i.e., it inherits
+all the methods of
+the Tree ADT
+Additional methods:
+◼
+◼
+◼
+
+❑
+
+❑
+
+node left(n)
+node right(n)
+node sibling(n)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+The above methods
+return null when
+there is no left,
+right, or sibling of p,
+respectively
+Update methods
+may be defined by
+data structures
+implementing the
+BinaryTree ADT
+13
+
+Linked Structure for Binary Trees
+❑
+
+A node is represented
+by an object storing
+◼
+◼
+◼
+◼
+
+❑
+
+
+
+Element
+Parent node
+Left child node
+Right child node
+
+B
+
+Node objects implement
+the Tree ADT
+
+
+
+B
+A
+
+
+
+A
+
+D
+C
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+D
+
+
+E
+F28DA 2019-20
+
+
+C
+
+
+
+
+E
+14
+
+Array-Based Representation of
+Binary Trees
+❑
+
+Nodes are stored in an array A
+
+0
+A
+
+A
+
+B
+
+D
+
+0
+
+1
+
+2
+
+…
+
+G
+
+H
+
+9
+
+10
+
+…
+
+1
+
+Node v is stored at A[rank(v)]
+3
+◼ rank(root) = 0
+E
+◼ if node is the left child of parent(node),
+rank(node) = 2  rank(parent(node)) + 1
+◼ if node is the right child of parent(node),
+9
+rank(node) = 2 rank(parent(node)) + 2
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+2
+B
+
+D
+
+4
+
+5
+
+6
+C
+
+F
+
+J
+
+10
+G
+
+H
+15
+
+Binary Search
+❑
+
+Binary search can perform nearest neighbor queries on an
+ordered map that is implemented with an array, sorted by key
+◼
+◼
+
+◼
+
+❑
+
+similar to the high-low children’s game
+at each step, the number of candidate items is halved
+terminates after O(log n) steps
+
+Example: find(7)
+0
+
+1
+
+3
+
+4
+
+5
+
+7
+
+1
+
+0
+
+3
+
+4
+
+5
+
+m
+
+l
+0
+
+9
+
+11
+
+14
+
+16
+
+18
+
+19
+
+m
+
+l
+0
+
+8
+
+1
+1
+
+3
+3
+
+7
+
+h
+
+8
+
+9
+
+11
+
+14
+
+16
+
+18
+
+19
+
+8
+
+9
+
+11
+
+14
+
+16
+
+18
+
+19
+
+8
+
+9
+
+11
+
+14
+
+16
+
+18
+
+19
+
+h
+4
+
+5
+
+7
+
+l
+
+m
+
+h
+
+4
+
+5
+
+7
+
+l=m =h
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+16
+
+Binary Search Trees
+❑
+
+A binary search tree is a
+binary tree storing keys
+(or key-value entries) at
+its internal nodes and
+satisfying the following
+property:
+◼
+
+❑
+
+Let u, v, and w be three
+nodes such that u is in
+the left subtree of v and
+w is in the right subtree
+of v. We have
+key(u)  key(v)  key(w)
+
+An inorder traversal of a
+binary search trees
+visits the keys in
+increasing order
+
+❑
+
+6
+
+2
+1
+
+9
+4
+
+8
+
+External nodes do not
+store items
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+17
+
+Search
+❑
+
+❑
+
+❑
+
+❑
+
+To search for a key k, we
+trace a downward path
+starting at the root
+The next node visited
+depends on the comparison
+of k with the key of the
+current node
+If we reach a leaf, the key
+is not found
+Example: get(4):
+◼
+
+❑
+
+Algorithm TreeSearch(k, v)
+if T.isExternal (v)
+return v
+if k < key(v)
+return TreeSearch(k, left(v))
+else if k = key(v)
+return v
+else { k > key(v) }
+return TreeSearch(k, right(v))
+
+<
+
+Call TreeSearch(4,root)
+
+2
+
+The algorithms for nearest
+neighbor queries are
+similar
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+1
+
+F28DA 2019-20
+
+6
+
+9
+
+>
+4 =
+
+8
+
+18
+
+Insertion
+❑
+
+❑
+
+❑
+
+❑
+
+6
+
+<
+
+To perform operation
+put(k, o), we search for key
+k (using TreeSearch)
+Assume k is not already in
+the tree, and let w be the
+leaf reached by the search
+We insert k at node w and
+expand w into an internal
+node
+Example: insert 5
+
+2
+
+9
+
+>
+
+1
+
+4
+
+8
+
+>
+w
+6
+
+2
+
+1
+
+9
+
+4
+
+8
+
+w
+5
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+19
+
+Deletion
+❑
+
+❑
+
+❑
+
+❑
+
+To perform operation
+remove(k), we search for
+key k
+Assume key k is in the tree,
+and let let v be the node
+storing k
+If node v has a leaf child w,
+we remove v and w from the
+tree with operation
+removeExternal(w), which
+removes w and its parent
+Example: remove 4
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+6
+
+<
+2
+
+9
+
+>
+4 v
+
+1
+
+8
+
+w
+5
+
+6
+2
+1
+
+F28DA 2019-20
+
+9
+5
+
+8
+
+20
+
+Deletion (cont.)
+❑
+
+We consider the case where
+the key k to be removed is
+stored at a node v whose
+children are both internal
+◼
+
+◼
+◼
+
+❑
+
+we find the internal node w
+that follows v in an inorder
+traversal
+we copy key(w) into node v
+we remove node w and its
+left child z (which must be a
+leaf) by means of operation
+removeExternal(z)
+
+Example: remove 3
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+1
+
+v
+3
+2
+
+8
+
+6
+
+w
+
+5
+
+z
+1
+
+v
+5
+2
+
+8
+6
+
+F28DA 2019-20
+
+9
+
+9
+
+21
+
+Performance
+❑
+
+Consider an ordered
+map with n items
+implemented by means
+of a binary search tree
+of height h
+◼
+◼
+
+❑
+
+the space used is O(n)
+methods get, put and
+remove take O(h) time
+
+The height h is O(n) in
+the worst case and
+O(log n) in the best
+case
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+22
+
+AVL Trees
+Balanced BST
+(named after their inventors,
+Adelson-Velskii and Landis)
+
+6
+
+v
+
+8
+
+3
+
+z
+4
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+23
+
+AVL Tree Definition
+❑
+
+❑
+
+AVL trees are
+balanced
+
+An AVL Tree is a 2
+binary search tree
+such that for
+every internal
+node v of T, the
+heights of the
+children of v can
+differ by at most 1
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+44
+
+4
+
+17
+
+78
+1
+
+3
+
+2
+
+32
+
+88
+
+50
+1
+48
+
+62
+
+1
+
+An example of an AVL tree where the
+heights are shown next to the nodes
+F28DA 2019-20
+
+24
+
+1
+
+n(2)
+
+Height of an AVL Tree
+
+3
+
+4
+
+n(1)
+
+Fact: The height of an AVL tree storing n keys is O(log n).
+Proof (by induction): Let us bound n(h): the minimum number
+of internal nodes of an AVL tree of height h.
+❑ We easily see that n(1) = 1 and n(2) = 2
+❑ For n > 2, an AVL tree of height h contains the root node,
+one AVL subtree of height n-1 and another of height n-2.
+❑ That is, n(h) = 1 + n(h-1) + n(h-2)
+❑ Knowing n(h-1) > n(h-2), we get n(h) > 2n(h-2). So
+n(h) > 2n(h-2), n(h) > 4n(h-4), n(h) > 8n(n-6), … (by induction),
+n(h) > 2in(h-2i)
+
+Solving the base case we get: n(h) > 2 h/2-1
+❑ Taking logarithms: h < 2log n(h) +2
+❑ Thus the height of an AVL tree is O(log n)
+© 2014 Goodrich,
+❑
+
+Tamassia, Goldwasser
+
+F28DA 2019-20
+
+25
+
+Insertion
+❑
+❑
+❑
+
+Insertion is as in a binary search tree (always done by
+expanding an external node)
+If the insertion of w creates an unbalance, let z be the highest
+parent with unbalanced children subtree
+Example:
+44
+44
+17
+
+78
+
+17
+
+78
+
+c=z
+
+a=y
+32
+
+50
+
+48
+
+88
+
+62
+
+32
+
+50
+
+88
+
+48
+
+62
+
+b=x
+
+54
+w
+
+before insertion
+
+after insertion
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+26
+
+Trinode Restructuring
+
+Let z be the highest node with unbalanced children, let y and x be its children
+and parents of the inserted node w
+Let (a,b,c) be the inorder listing of x, y, z
+Perform the rotations needed to make b the topmost node of the three
+
+❑
+
+❑
+❑
+
+Single rotation
+around b
+
+a=z
+
+Double rotation around
+c and a
+
+a=z
+c=y
+
+b=y
+T0
+
+T0
+
+b=x
+
+c=x
+
+T1
+
+T3
+
+b=y
+T2
+
+T3
+
+a=z
+
+T0
+
+T1
+
+c=x
+
+T1
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+T2
+
+T3
+
+F28DA 2019-20
+
+T2
+
+b=x
+a=z
+
+T0
+
+c=y
+
+T1
+
+T3
+
+T2
+27
+
+Insertion Example, continued
+44
+2
+
+5
+
+z
+
+17
+32
+
+3
+
+1
+
+1
+1
+
+1
+
+50
+
+2
+1
+
+7
+
+78
+
+2y
+
+48
+
+64
+
+3
+
+4
+62
+
+88
+
+x
+5
+
+T3
+
+54
+
+unbalanced...
+
+T0
+
+T2
+
+T1
+
+44
+
+2
+
+4
+3
+
+17
+
+32
+
+1
+
+...balanced
+
+1
+
+1
+
+2 y
+2
+
+48
+
+50
+
+4
+
+x
+z6
+
+62
+
+3
+
+1
+
+5
+
+78
+
+2
+
+54
+
+7
+88
+
+T2
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+T0
+
+T1
+
+28
+
+T3
+
+1
+
+Restructuring (as Single Rotations)
+❑
+
+Single Rotations:
+a=z
+
+single rotation
+
+b=y
+c =x
+T0
+
+T1
+
+T3
+
+T2
+
+c =z
+
+a=z
+
+T0
+
+single rotation
+
+b=y
+
+b=y
+c =x
+
+T1
+
+T3
+
+T2
+
+b=y
+a=x
+
+c =z
+
+a=x
+T0
+
+T1
+
+T2
+
+T3
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+T3
+F28DA 2019-20
+
+T2
+
+T1
+
+T0
+29
+
+Restructuring (as Double Rotations)
+❑
+
+double rotations:
+double rotation
+
+a=z
+c=y
+
+b=x
+
+a=z
+
+c=y
+
+b=x
+T0
+
+T3
+
+T2
+
+T1
+
+T0
+
+T1
+
+double rotation
+
+c=z
+a=y
+
+T2
+
+T3
+
+b=x
+a=y
+
+c=z
+
+b=x
+T3
+
+T2
+
+T0
+
+T3
+
+T2
+
+T1
+
+T0
+
+T1
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+30
+
+Removal
+❑
+
+❑
+
+Removal begins as in a binary search tree, which means the node
+removed will become an empty external node. Its parent, w, may
+cause an imbalance.
+Example:
+44
+
+44
+
+17
+
+62
+
+32
+
+50
+
+48
+
+17
+
+78
+
+50
+
+88
+
+54
+
+before deletion of 32
+© 2014 Goodrich, Tamassia, Goldwasser
+
+62
+
+F28DA 2019-20
+
+48
+
+78
+
+54
+
+88
+
+after deletion
+31
+
+Rebalancing after a Removal
+❑
+
+❑
+❑
+
+Let z be the first unbalanced node encountered while travelling up the tree
+from w. Also, let y be the child of z with the larger height, and let x be the
+child of y with the larger height
+We perform a trinode restructuring to restore balance at z
+As this restructuring may upset the balance of another node higher in the
+tree, we must continue checking for balance until the root of T is reached
+
+a=z
+w
+
+62
+
+44
+
+17
+
+62
+
+50
+
+48
+
+44
+
+b=y
+c=x
+
+78
+
+54
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+17
+
+50
+
+48
+
+88
+
+F28DA 2019-20
+
+78
+
+88
+
+54
+
+32
+
+AVL Tree Performance
+❑
+
+AVL tree storing n items
+◼
+
+The data structure uses O(n) space
+
+◼
+
+A single restructuring takes O(1) time
+ using a linked-structure binary tree
+
+◼
+
+Searching takes O(log n) time
+ height of tree is O(log n), no restructures needed
+
+◼
+
+Insertion takes O(log n) time
+ initial find is O(log n)
+ restructuring up the tree, maintaining heights is O(log n)
+
+◼
+
+Removal takes O(log n) time
+ initial find is O(log n)
+ restructuring up the tree, maintaining heights is O(log n)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+33
+
+Summary
+❑
+❑
+❑
+
+Trees (ADT and traversals)
+Binary Search Trees (BST)
+AVL Trees (a type of balanced tree)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+34
+
+Summary
+“Tree” of Trees (so far)
+Each level (except last
+one) has maximum
+number of nodes.
+Nodes as far to the left
+as possible
+
+Obeys
+heaporder
+
+General Tree
+
+Heap
+
+Full (Proper)
+Binary Tree
+Binary
+Search Tree
+
+AVL Tree
+© 2014 Goodrich, Tamassia, Goldwasser
+
+at most 2
+children
+
+Binary Tree
+
+Complete
+Binary Tree
+
+F28DA 2019-20
+
+arbitrary
+number of
+children
+
+0 or 2
+children
+
+obeys binary search
+tree order
+
+obeys height-balance
+property
+35
+
+Further reading
+❑
+
+Data Structures and Algorithms in Java, 6th
+edition, by M. T. Goodrich, R. Tamassia, and
+M. H. Goldwasser, Wiley, 2014
+◼
+
+❑
+
+Chapters 8 and 11
+
+Data Structures and Algorithm Analysis, by
+Clifford A. Shaffer, 2013
+◼
+
+Chapters 5, 6 and 10
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+36
+
+

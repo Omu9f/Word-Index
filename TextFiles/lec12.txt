@@ -1,0 +1,844 @@
+F28DA 2019-20 Semester 1
+
+Data Structures and Algorithms
+Lecture 12: Shortest Paths
+Manuel Maarek (Edinburgh)
+Lucine Gharibian (Dubai)
+A
+
+8
+
+0
+
+4
+
+2
+B
+
+8
+
+2
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+7
+5
+E
+
+C
+3
+
+2
+
+1
+
+9
+
+D
+8
+
+F
+
+3
+
+5
+
+1
+
+Outline
+❑
+❑
+
+Weighted Graphs
+Shortest Paths Algorithm (Dijkstra’s)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+2
+
+Weighted Graphs
+❑
+
+❑
+❑
+
+In a weighted graph, each edge has an associated numerical
+value, called the weight of the edge
+Edge weights may represent, distances, costs, etc.
+Example:
+◼
+
+In a flight route graph, the weight of an edge represents the
+distance in miles between the endpoint airports
+
+SFO
+
+PVD
+
+ORD
+LGA
+
+HNL
+
+LAX
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+DFW
+F28DA 2019-20
+
+MIA
+3
+
+Shortest Paths
+❑
+
+Given a weighted graph and two vertices u and v, we want to
+find a path of minimum total weight between u and v.
+◼
+
+❑
+
+Example:
+◼
+
+❑
+
+Length of a path is the sum of the weights of its edges.
+Shortest path between Providence and Honolulu
+
+Applications
+◼
+◼
+◼
+
+Internet packet routing
+Flight reservations
+Driving directions
+
+SFO
+
+PVD
+
+ORD
+LGA
+
+HNL
+
+LAX
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+DFW
+F28DA 2019-20
+
+MIA
+4
+
+Shortest Paths: Assumptions
+▪ Graph is simple
+▪ No parallel edges and no self-loops
+
+▪ Graph is connected
+
+▪ If not, run the algorithm for each connected component
+
+▪ Graph is undirected
+
+▪ It is simple to extend to directed case
+
+▪ No negative weight edges
+
+▪ There is an algorithm to compute shortest paths in a graph
+with negative edges
+▪ It has higher time complexity
+▪ Does not work if there is a negative cost cycle
+▪ Makes no sense to compute shortest paths in the presence of
+negative cycles
+
+▪ in a graph with a negative cycle, shortest path has cost negative
+infinity
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+5
+
+Shortest Path Properties
+Property 1:
+A subpath of a shortest path is itself a shortest path
+
+Property 2:
+There is a tree of shortest paths from a start vertex to all the other
+vertices
+
+Example:
+Tree of shortest paths from Providence
+
+SFO
+
+PVD
+
+ORD
+LGA
+
+HNL
+
+LAX
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+DFW
+F28DA 2019-20
+
+MIA
+6
+
+Dijkstra’s Algorithm
+❑
+
+❑
+
+❑
+
+The distance of a vertex
+v from a vertex s is the
+length of a shortest path
+between s and v
+Dijkstra’s algorithm
+computes the distances
+of all the vertices from a
+given start vertex s
+Assumptions:
+◼
+◼
+
+◼
+
+the graph is connected
+the edges are
+undirected
+the edge weights are
+nonnegative
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+❑
+
+❑
+
+❑
+
+We grow a “cloud” of vertices,
+beginning with s and eventually
+covering all the vertices
+We store with each vertex v a
+label d(v) representing the
+distance of v from s in the
+subgraph consisting of the cloud
+and its adjacent vertices
+At each step
+◼
+
+◼
+
+F28DA 2019-20
+
+We add to the cloud the vertex
+u outside the cloud with the
+smallest distance label, d(u)
+We update the labels of the
+vertices adjacent to u
+7
+
+Edge Relaxation
+❑
+
+Consider an edge e = (u,z)
+such that
+◼
+
+◼
+
+❑
+
+d(u) = 50
+
+u is the vertex most recently
+added to the cloud
+z is not in the cloud
+
+s
+
+The relaxation of edge e
+updates distance d(z) as
+follows:
+
+e
+
+z
+
+d(u) = 50
+
+d(z)  min{d(z),d(u) + weight(e)}
+s
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+u
+
+F28DA 2019-20
+
+u
+
+d(z) = 75
+
+d(z) = 60
+e
+
+z
+
+8
+
+Example
+A
+
+8
+
+0
+4
+
+A
+
+8
+
+2
+B
+
+8
+
+7
+
+2
+
+C
+
+2
+
+1
+
+D
+
+9
+
+E
+
+
+F
+
+A
+
+8
+
+4
+
+5
+
+B
+
+8
+
+7
+5
+E
+
+2
+
+C
+3
+
+B
+2
+
+7
+
+5
+E
+
+D
+8
+
+A
+
+8
+
+3
+
+5
+
+0
+4
+
+2
+C
+
+3
+
+1
+
+9
+
+0
+4
+
+2
+
+F
+
+2
+8
+
+4
+
+2
+
+3
+
+
+
+0
+
+2
+
+1
+
+9
+
+D
+11
+
+F
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+3
+
+5
+
+B
+2
+
+F28DA 2019-20
+
+7
+
+7
+5
+E
+
+C
+3
+
+2
+
+1
+
+9
+
+D
+8
+
+F
+
+5
+9
+
+3
+
+Example (cont.)
+A
+
+8
+
+0
+4
+
+2
+B
+2
+
+7
+
+7
+
+C
+3
+
+5
+E
+
+2
+
+1
+
+9
+
+D
+
+8
+F
+
+3
+
+5
+A
+
+8
+
+0
+4
+
+2
+B
+
+2
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+7
+
+7
+
+C
+3
+
+5
+E
+
+2
+
+1
+
+9
+
+D
+8
+
+F
+
+3
+
+5
+
+10
+
+Dijkstra’s Algorithm
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+11
+
+Analysis of Dijkstra’s Algorithm
+❑
+
+Graph operations
+◼
+
+❑
+
+Label operations
+◼
+
+◼
+
+❑
+
+◼
+
+Each vertex is inserted once into and removed once from the priority
+queue, where each insertion or removal takes O(log n) time
+The key of a vertex in the priority queue is modified at most deg(w)
+times, where each key change takes O(log n) time
+
+Dijkstra’s algorithm runs in O((n + m) log n) time provided the
+graph is represented by the adjacency list/map structure
+◼
+
+❑
+
+We set/get the distance and locator labels of vertex z O(deg(z)) times
+Setting/getting a label takes O(1) time
+
+Priority queue operations
+◼
+
+❑
+
+We find all the incident edges once for each vertex
+
+Recall that
+
+Sv deg(v) = 2m
+
+The running time can also be expressed as O(m log n) since the
+graph is connected
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+12
+
+Java Implementation
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+13
+
+Java Implementation, 2
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+14
+
+Why Dijkstra’s Algorithm Works
+Dijkstra’s algorithm is based on the greedy
+method. It adds vertices by increasing distance.
+
+❑
+
+◼
+
+◼
+
+◼
+
+◼
+
+Suppose it didn’t find all shortest
+distances. Let F be the first wrong
+vertex the algorithm processed.
+When the previous node, D, on the
+true shortest path was considered,
+its distance was correct
+But the edge (D,F) was relaxed at
+that time!
+Thus, so long as d(F)>d(D), F’s
+distance cannot be wrong. That is,
+there is no wrong vertex
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+A
+
+8
+
+0
+4
+
+2
+B
+2
+
+7
+
+7
+
+C
+
+3
+
+5
+
+E
+
+2
+
+1
+
+9
+
+D
+8
+
+F
+
+5
+
+15
+
+3
+
+Why It Doesn’t Work for NegativeWeight Edges
+Dijkstra’s algorithm is based on the greedy
+method. It adds vertices by increasing distance.
+
+◼
+
+If a node with a negative
+incident edge were to be added
+late to the cloud, it could mess
+up distances for vertices already
+in the cloud.
+
+A
+
+8
+
+0
+4
+
+6
+B
+2
+
+7
+
+7
+
+C
+
+0
+
+5
+
+E
+
+5
+
+1
+
+-8
+
+D
+9
+
+F
+
+4
+
+5
+
+C’s true distance is 1, but
+it is already in the cloud
+with d(C)=5!
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+16
+
+Bellman-Ford Algorithm
+(not in book)
+❑
+
+❑
+
+❑
+
+❑
+❑
+
+Works even with negative- Algorithm BellmanFord(G, s)
+for all v  G.vertices()
+weight edges
+if v = s
+Must assume directed
+setDistance(v, 0)
+edges (for otherwise we
+else
+would have negativesetDistance(v, )
+for i  1 to n - 1 do
+weight cycles)
+for each e  G.edges()
+Iteration i finds all shortest
+{ relax edge e }
+paths that use i edges.
+u  G.origin(e)
+Running time: O(nm).
+z  G.opposite(u,e)
+r  getDistance(u) + weight(e)
+Can be extended to detect
+if r < getDistance(z)
+a negative-weight cycle if it
+setDistance(z,r)
+exists
+◼
+
+How?
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+17
+
+Summary
+❑
+
+❑
+
+Dijkstra’s algorithm computes the distances of all the
+vertices from a given start vertex s
+Assumptions:
+◼
+◼
+
+the graph is connected
+the edges are undirected
+ Easy to extend to directed graph, replace statement
+
+for all e  G.incidentEdges(u)
+with statement
+for all e  G.outgoingEdges(u)
+
+◼
+
+the edge weights are nonnegative
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+18
+
+Further reading
+❑
+
+Data Structures and Algorithms in Java, 6th
+edition, by M. T. Goodrich, R. Tamassia, and
+M. H. Goldwasser, Wiley, 2014
+◼
+
+❑
+
+Chapter 14
+
+Data Structures and Algorithm Analysis, by
+Clifford A. Shaffer, 2013
+◼
+
+Chapter 11
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+19
+
+

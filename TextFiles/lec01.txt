@@ -1,0 +1,1189 @@
+F28DA 2019-20 Semester 1
+
+Data Structures and Algorithms
+Lecture 1: Basic ADTs (revision)
+Manuel Maarek (Edinburgh)
+Lucine Gharibian (Dubai)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+1
+
+Outline
+❑
+❑
+
+Abstract Data Types (ADTs)
+Revision of known data structures
+◼
+◼
+◼
+◼
+
+❑
+
+Arrays
+Queues
+Stacks
+Linked lists
+
+Java
+◼
+◼
+
+Examples of basic ADTs implementation
+Interfaces
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+2
+
+Abstract Data Types (ADTs)
+❑
+
+❑
+
+An abstract data
+type (ADT) is an
+abstraction of a
+data structure
+An ADT specifies:
+◼
+◼
+
+◼
+
+Data stored
+Operations on the
+data
+Error conditions
+associated with
+operations
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+❑
+
+Example: ADT modeling a
+simple stock trading system
+◼
+
+◼
+
+The data stored are buy/sell
+orders
+The operations supported are
+ order buy(stock, shares, price)
+
+ order sell(stock, shares, price)
+ void cancel(order)
+◼
+
+Error conditions:
+ Buy/sell a nonexistent stock
+
+ Cancel a nonexistent order
+F28DA 2019-20
+
+3
+
+Arrays (revision)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+4
+
+Array Definition
+❑
+
+❑
+
+An array is a sequenced collection of
+variables all of the same type. Each
+variable, or cell, in an array has an index,
+which uniquely refers to the value stored in
+that cell. The cells of an array, A, are
+numbered 0, 1, 2, and so on.
+Each value stored in an array is often called
+an element of that array.
+A
+
+0 1 2
+© 2014 Goodrich, Tamassia, Goldwasser
+
+i
+F28DA 2019-20
+
+n
+5
+
+Array Length and Capacity
+❑
+
+❑
+
+Since the length of an array determines the
+maximum number of things that can be stored in
+the array, we will sometimes refer to the length of
+an array as its capacity.
+In Java, the length of an array named a can be
+accessed using the syntax a.length. Thus, the cells
+of an array, a, are numbered 0, 1, 2, and so on, up
+through a.length−1, and the cell with index k can
+be accessed with syntax a[k].
+a
+
+0 1 2
+© 2014 Goodrich, Tamassia, Goldwasser
+
+k
+F28DA 2019-20
+
+n
+6
+
+Declaring Arrays (first way)
+❑
+
+❑
+
+The first way to create an array is to use an
+assignment to a literal form when initially declaring the
+array, using a syntax as:
+
+The elementType can be any Java base type or class
+name, and arrayName can be any valid Java identifier.
+The initial values must be of the same type as the
+array.
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+7
+
+Declaring Arrays (second way)
+❑
+
+The second way to create an array is to use
+the new operator.
+◼
+
+❑
+
+❑
+
+However, because an array is not an instance of a
+class, we do not use a typical constructor. Instead
+we use the syntax:
+
+new elementType[length]
+length is a positive integer denoting the length
+of the new array.
+The new operator returns a reference to the
+new array, and typically this would be
+assigned to an array variable.
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+8
+
+Arrays of Characters or
+Object References
+❑
+
+❑
+
+An array can store primitive elements, such as
+characters.
+
+An array can also store references to objects.
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+9
+
+Java Example: Game Entries
+❑
+
+A game entry stores the name of a player and her best score so far in a game
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+10
+
+Java Example: Scoreboard
+❑
+
+Keep track of players and their best scores in an array, board
+◼
+
+The elements of board are objects of class GameEntry
+
+◼
+
+Array board is sorted by score
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+11
+
+Adding an Entry
+❑
+
+To add an entry e into array board at index i, we
+need to make room for it by shifting forward the
+n - i entries board[i], …, board[n  1]
+board
+0 1 2
+
+i
+
+n
+
+0 1 2
+
+i
+
+n
+
+0 1 2
+
+e
+i
+
+board
+
+board
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+n
+
+12
+
+Java Example
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+13
+
+Removing an Entry
+❑
+
+To remove the entry e at index i, we need to fill the hole
+left by e by shifting backward the n - i - 1 elements
+board[i + 1], …, board[n  1]
+board
+
+0 1 2
+
+e
+i
+
+n
+
+0 1 2
+
+i
+
+n
+
+0 1 2
+
+i
+
+board
+
+board
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+n
+14
+
+Java Example
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+15
+
+Queues (revision)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+16
+
+The Queue ADT
+❑
+
+❑
+
+❑
+
+❑
+
+The Queue ADT stores arbitrary ❑
+objects
+Insertions and deletions follow
+the first-in first-out scheme
+Insertions are at the rear of the
+queue and removals are at the
+front of the queue
+Main queue operations:
+◼
+
+◼
+
+enqueue(object): inserts an
+element at the end of the
+❑
+queue
+object dequeue(): removes and
+returns the element at the front
+of the queue
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Auxiliary queue
+operations:
+◼
+
+◼
+
+◼
+
+object first(): returns the
+element at the front without
+removing it
+integer size(): returns the
+number of elements stored
+boolean isEmpty(): indicates
+whether no elements are
+stored
+
+Boundary cases:
+
+F28DA 2019-20
+
+◼
+
+Attempting the execution of
+dequeue or first on an
+empty queue returns null
+17
+
+Example
+Operation
+enqueue(5)
+enqueue(3)
+dequeue()
+enqueue(7)
+dequeue()
+first()
+dequeue()
+dequeue()
+isEmpty()
+enqueue(9)
+enqueue(7)
+size()
+enqueue(3)
+enqueue(5)
+dequeue()
+© 2014 Goodrich, Tamassia, Goldwasser
+
+–
+–
+5
+–
+3
+7
+7
+null
+true
+–
+–
+2
+–
+–
+9
+
+Output Q
+(5)
+(5, 3)
+(3)
+(3, 7)
+(7)
+(7)
+()
+()
+()
+(9)
+(9, 7)
+(9, 7)
+(9, 7, 3)
+(9, 7, 3, 5)
+(7, 3, 5)
+
+F28DA 2019-20
+
+18
+
+Applications of Queues
+❑
+
+Direct applications
+◼
+
+◼
+◼
+
+❑
+
+Waiting lists, bureaucracy
+Access to shared resources (e.g., printer)
+Multiprogramming
+
+Indirect applications
+◼
+◼
+
+Auxiliary data structure for algorithms
+Component of other data structures
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+19
+
+Array-based Queue
+❑
+❑
+
+Use an array of size N in a circular fashion
+Two variables keep track of the front and size
+f index of the front element
+sz number of stored elements
+
+❑
+
+When the queue has fewer than N elements, array
+location r = (f + sz) mod N is the first empty slot
+past the rear of the queue
+
+normal configuration
+Q
+
+0 1 2
+f
+r
+wrapped-around configuration
+Q
+0 1 2
+
+r
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+f
+
+20
+
+Queue Operations
+❑
+
+We use the
+modulo operator
+(remainder of
+division)
+
+Algorithm size()
+return sz
+
+Algorithm isEmpty()
+return (sz == 0)
+
+Q
+0 1 2
+
+f
+
+0 1 2
+
+r
+
+r
+
+Q
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+f
+F28DA 2019-20
+
+21
+
+Queue Operations (cont.)
+❑
+
+❑
+
+Operation enqueue
+throws an exception if
+the array is full
+This exception is
+implementationdependent
+
+Algorithm enqueue(o)
+if size() = N - 1 then
+throw IllegalStateException
+else
+r  (f + sz) mod N
+Q[r]  o
+sz  (sz + 1)
+
+Q
+0 1 2
+
+f
+
+0 1 2
+
+r
+
+r
+
+Q
+© 2014 Goodrich, Tamassia, Goldwasser
+
+f
+F28DA 2019-20
+
+22
+
+Queue Operations (cont.)
+❑
+
+Note that operation
+dequeue returns null
+if the queue is empty
+
+Algorithm dequeue()
+if isEmpty() then
+return null
+else
+o  Q[f]
+f  (f + 1) mod N
+sz  (sz - 1)
+return o
+
+Q
+
+0 1 2
+
+f
+
+0 1 2
+
+r
+
+r
+
+Q
+© 2014 Goodrich, Tamassia, Goldwasser
+
+f
+F28DA 2019-20
+
+23
+
+Queue Interface in Java
+❑
+
+❑
+
+Java interface
+corresponding to
+our Queue ADT
+Assumes that
+first() and
+dequeue() return
+null if queue is
+empty
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+public interface Queue<E> {
+int size();
+boolean isEmpty();
+E first();
+
+void enqueue(E e);
+E dequeue();
+}
+
+F28DA 2019-20
+
+24
+
+Array-based Implementation
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+25
+
+Array-based Implementation (2)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+26
+
+Comparison to java.util.Queue
+❑
+
+Our Queue methods and corresponding
+methods of java.util.Queue:
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+27
+
+Stacks (revision)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+28
+
+The Stack ADT
+❑
+
+❑
+
+❑
+
+❑
+
+The Stack ADT stores
+arbitrary objects
+Insertions and deletions
+follow the last-in first-out
+scheme
+Think of a spring-loaded
+plate dispenser
+Main stack operations:
+◼
+
+◼
+
+❑
+
+push(object): inserts an
+element
+object pop(): removes and
+returns the last inserted
+element
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+Auxiliary stack
+operations:
+◼
+
+◼
+
+◼
+
+object top(): returns the
+last inserted element
+without removing it
+integer size(): returns the
+number of elements
+stored
+boolean isEmpty():
+indicates whether no
+elements are stored
+
+29
+
+Stack Interface in Java
+❑
+
+❑
+
+❑
+
+Java interface
+corresponding to
+our Stack ADT
+Assumes null is
+returned from
+top() and pop()
+when stack is
+empty
+Different from the
+built-in Java class
+java.util.Stack
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+public interface Stack<E> {
+int size();
+boolean isEmpty();
+E top();
+
+void push(E element);
+E pop();
+}
+
+F28DA 2019-20
+
+30
+
+Example
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+31
+
+Exceptions vs. Returning Null
+❑
+
+❑
+
+❑
+
+Attempting the
+execution of an
+operation of an ADT
+may sometimes cause
+an error condition
+Java supports a general
+abstraction for errors,
+called exception
+An exception is said to
+be “thrown” by an
+operation that cannot
+be properly executed
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+❑
+
+❑
+
+❑
+
+F28DA 2019-20
+
+In our Stack ADT, we
+do not use exceptions
+Instead, we allow
+operations pop and top
+to be performed even
+if the stack is empty
+For an empty stack,
+pop and top simply
+return null
+
+32
+
+Applications of Stacks
+❑
+
+Direct applications
+◼
+◼
+◼
+
+❑
+
+Page-visited history in a Web browser
+Undo sequence in a text editor
+Chain of method calls in the Java Virtual
+Machine
+
+Indirect applications
+◼
+
+◼
+
+Auxiliary data structure for algorithms
+Component of other data structures
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+33
+
+Array-based Stack
+❑
+
+❑
+
+❑
+
+A simple way of
+implementing the
+Stack ADT uses an
+array
+We add elements
+from left to right
+A variable keeps
+track of the index of
+the top element
+
+Algorithm size()
+return t + 1
+
+Algorithm pop()
+if isEmpty() then
+return null
+else
+tt-1
+return S[t + 1]
+…
+
+S
+
+0 1 2
+© 2014 Goodrich, Tamassia, Goldwasser
+
+t
+F28DA 2019-20
+
+34
+
+Array-based Stack (cont.)
+❑
+
+❑
+
+The array storing the
+stack elements may
+become full
+A push operation will
+then throw a
+FullStackException
+◼
+
+◼
+
+Algorithm push(o)
+if t = S.length - 1 then
+throw IllegalStateException
+else
+tt+1
+Limitation of the arrayS[t]  o
+based implementation
+Not intrinsic to the
+Stack ADT
+
+…
+
+S
+0 1 2
+© 2014 Goodrich, Tamassia, Goldwasser
+
+t
+F28DA 2019-20
+
+35
+
+Array-based Stack in Java
+public class ArrayStack<E>
+implements Stack<E> {
+
+// holds the stack elements
+private E[ ] S;
+// index to top element
+private int top = -1;
+// constructor
+public ArrayStack(int capacity) {
+S = (E[ ]) new Object[capacity]);
+}
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+public E pop() {
+if isEmpty()
+return null;
+E temp = S[top];
+// facilitate garbage collection:
+S[top] = null;
+top = top – 1;
+return temp;
+}
+
+… (other methods of Stack interface)
+
+F28DA 2019-20
+
+36
+
+Singly Linked Lists (revision)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+37
+
+Singly Linked List
+❑
+
+❑
+
+A singly linked list is a
+concrete data structure
+consisting of a sequence
+of nodes, starting from a
+head pointer
+Each node stores
+◼
+
+head
+
+◼
+
+next
+
+element
+
+node
+
+element
+link to the next node
+
+
+
+A
+© 2014 Goodrich, Tamassia, Goldwasser
+
+B
+
+C
+F28DA 2019-20
+
+D
+38
+
+A Nested Node Class
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+39
+
+Accessor Methods
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+40
+
+Inserting at the Head
+•
+
+•
+
+•
+
+•
+
+Allocate new
+node
+Insert new
+element
+Have new
+node point
+to old head
+Update
+head to
+point to new
+node
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+41
+
+Inserting at the Tail
+•
+
+•
+
+•
+
+•
+
+•
+
+Allocate a new
+node
+Insert new
+element
+Have new node
+point to null
+Have old last node
+point to new node
+Update tail to
+point to new node
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+42
+
+Java Methods
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+43
+
+Removing at the Head
+•
+
+•
+
+Update head
+to point to
+next node in
+the list
+Allow
+garbage
+collector to
+reclaim the
+former first
+node
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+44
+
+Java Method
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+45
+
+Removing at the Tail
+•
+
+•
+
+Removing at the tail of a singly linked list is
+not efficient!
+There is no constant-time way to update the
+tail to point to the previous node
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+46
+
+Summary
+❑
+
+Review of known data structures
+◼
+
+◼
+◼
+◼
+
+❑
+
+Arrays
+Queues
+Stacks
+Linked lists
+
+Java programming
+◼
+◼
+
+Examples of data structure implementation
+Interfaces
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+47
+
+Further reading
+❑
+
+Data Structures and Algorithms in Java, 6th
+edition, by M. T. Goodrich, R. Tamassia, and
+M. H. Goldwasser, Wiley, 2014
+◼
+
+❑
+
+Chapters 3 and 6
+
+Data Structures and Algorithm Analysis, by
+Clifford A. Shaffer, 2013
+◼
+
+Chapter 4
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+48
+
+

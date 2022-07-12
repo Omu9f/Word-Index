@@ -1,0 +1,839 @@
+F28DA 2019-20 Semester 1
+
+Data Structures and Algorithms
+Lecture 11: Directed Graphs
+Manuel Maarek (Edinburgh)
+Lucine Gharibian (Dubai)
+BOS
+ORD
+JFK
+
+SFO
+
+DFW
+LAX
+MIA
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+1
+
+Outline
+❑
+
+Directed Graphs
+◼
+◼
+
+Properties
+Algorithms for Directed Graphs
+ DFS and BFS
+ Strong Connectivity
+ Transitive Closure
+
+ DAG and Topological Ordering
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+2
+
+Digraphs
+❑
+
+A digraph is a graph
+whose edges are all
+directed
+◼
+
+❑
+
+◼
+◼
+
+D
+
+Short for “directed graph”
+
+Applications
+◼
+
+E
+
+C
+
+one-way streets
+flights
+task scheduling
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+B
+
+A
+
+F28DA 2019-20
+
+3
+
+E
+
+Digraph Properties
+
+D
+C
+
+❑
+
+◼
+◼
+
+❑
+❑
+
+B
+
+A graph G=(V,E) such that
+Each edge goes in one direction:
+A
+Edge (a,b) goes from a to b, but not b to a
+
+If G is simple, m < n(n - 1)
+If we keep in-edges and out-edges in separate
+adjacency lists, we can perform listing of
+incoming edges and outgoing edges in time
+proportional to their size
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+4
+
+Digraph Application
+❑
+
+Scheduling: edge (a,b) means task a must be
+completed before b can be started
+cs21
+
+cs22
+
+cs46
+
+cs51
+
+cs53
+
+cs52
+cs161
+
+cs131
+
+cs141
+
+cs121
+
+The good life
+
+cs151
+© 2014 Goodrich, Tamassia, Goldwasser
+
+cs171
+
+F28DA 2019-20
+
+5
+
+Directed DFS
+❑
+
+❑
+
+We can specialize the traversal
+algorithms (DFS and BFS) to
+digraphs by traversing edges
+only along their direction
+In the directed DFS algorithm,
+we have four types of edges
+◼
+◼
+◼
+◼
+
+❑
+
+D
+C
+
+discovery edges
+back edges
+forward edges
+cross edges
+
+B
+
+A directed DFS starting at a
+vertex s determines the vertices
+reachable from s
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+E
+
+F28DA 2019-20
+
+A
+
+6
+
+Reachability
+❑
+
+DFS tree rooted at v: vertices reachable
+from v via directed paths
+E
+
+E
+
+D
+C
+
+D
+C
+
+F
+
+A
+E
+
+A
+
+B
+
+C
+
+A
+© 2014 Goodrich, Tamassia, Goldwasser
+
+D
+
+F28DA 2019-20
+
+F
+
+B
+7
+
+Strong Connectivity
+❑
+
+Each vertex can reach all other vertices
+a
+g
+
+c
+d
+e
+
+b
+
+f
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+8
+
+Inefficient Algorithm to Check for
+Strongly Connectivity
+stronglyConnected = true
+for every vertex v in G
+DFS(G,v)
+if some vertex w is not visited
+stronglyConnected = false
+
+G:
+a
+
+g
+
+c
+d
+
+e
+b
+
+f
+
+▪ DFS(G,v) visits every vertex reachable from v
+▪ Simple, yet very inefficient, O((n+m)n)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+9
+
+Strong Connectivity
+Algorithm
+❑
+
+❑
+
+Pick a vertex v in G
+Perform a DFS from v in G
+◼
+
+❑
+❑
+
+◼
+
+❑
+
+G:
+
+d
+
+e
+b
+
+f
+
+If there’s a w not visited, print “no”
+Else, print “yes”
+
+Running time: O(n+m)
+
+g
+
+c
+
+If there’s a w not visited, print “no”
+
+Let G’ be G with edges reversed
+Perform a DFS from v in G’
+◼
+
+a
+
+a
+
+G’:
+
+g
+
+c
+d
+
+e
+
+b
+
+f
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+10
+
+Strongly Connected
+Components
+❑
+
+❑
+
+Maximal subgraphs such that each vertex can reach
+all other vertices in the subgraph
+Can also be done in O(n+m) time using DFS, but is
+more complicated (similar to biconnectivity).
+
+a
+c
+d
+
+{a,c,g}
+
+b
+
+{f,d,e,b}
+
+e
+
+f
+© 2014 Goodrich, Tamassia, Goldwasser
+
+g
+
+F28DA 2019-20
+
+11
+
+Transitive Closure
+❑
+
+❑
+
+Given a digraph G, the
+transitive closure of G is the
+digraph G* such that
+◼ G* has the same vertices
+as G
+◼ if G has a directed path
+from u to v (u  v), G*
+has a directed edge from
+u to v
+The transitive closure
+provides reachability
+information about a digraph
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+D
+
+E
+
+B
+
+C
+
+G
+
+A
+
+D
+
+E
+
+B
+C
+
+A
+
+G*
+12
+
+Computing the
+Transitive Closure
+❑
+
+We can perform DFS(G,v) for each vertex v
+for all vertices v in graph G
+DFS(G,v)
+for all vertices w in graph G
+if w is reachable from v
+put edge (v,w) in G*
+
+❑
+
+Running time is O(n(n+m))
+◼
+
+This is O(n2) for sparse graphs
+
+
+◼
+
+A graph is sparse if it has O(n) edges
+
+This is O(n3) for dense graphs
+
+
+A graph is dense if it has O(n2) edges
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+13
+
+DAGs and Topological Ordering
+A directed acyclic graph (DAG) is a
+digraph that has no directed cycles
+❑
+A topological ordering of a digraph
+is a numbering
+v1 , …, vn
+of the vertices such that for every
+edge (vi , vj), we have i < j
+❑
+Example: in a task scheduling
+digraph, a topological ordering a
+task sequence that satisfies the
+v2
+precedence constraints
+Theorem
+A digraph admits a topological
+v1
+ordering if and only if it is a DAG
+
+D
+
+❑
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+E
+
+B
+
+C
+DAG G
+
+A
+D
+B
+
+C
+A
+
+v4
+
+E
+
+v5
+
+v3
+Topological
+ordering of G
+14
+
+Topological Sorting
+❑
+
+Number vertices, so that (u,v) in E implies u < v
+wake up
+
+1
+
+A typical student day
+
+2
+study computer sci.
+
+7
+play
+
+nap
+
+eat
+4
+
+8
+write c.s. program
+
+9
+
+3
+
+5
+more c.s.
+
+6
+work out
+
+❑ Scheduling
+problem: edge
+(a,b) means task
+a must be
+completed before
+b can be started
+
+bake cookies
+10
+sleep
+© 2014 Goodrich, Tamassia, Goldwasser
+
+11
+
+dream about graphs
+F28DA 2019-20
+
+15
+
+Topological Ordering Theorem
+Theorem: Digraph admits topological ordering if and only if it is a DAG
+Proof:
+Suppose graph is not a DAG, that is it has a cycle v1, v2,…, vn1, vn, v1. If topological ordering existed, it would imply that
+v1.num < v2.num < …< vn-1.num < vn.num < v1.num
+❑ If graph is a DAG, there is a vertex v with no outgoing
+edges
+❑
+
+if every vertex has an outgoing edge, then performing DFS
+we will encounter a back edge which means cycle
+
+❑ This vertex can be the last one in topological ordering
+❑ Removing this vertex from the graph with incoming and
+outgoing edges leaves the graph acyclic
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+16
+
+Algorithm for Topological Sorting
+❑
+
+Note: This algorithm is different than the
+one in the book
+Algorithm TopologicalSort(G)
+HG
+// Temporary copy of G
+n  G.numVertices()
+while H is not empty do
+Let v be a vertex with no outgoing edges
+Label v  n
+nn-1
+Remove v from H
+
+❑
+
+Running time: O(n + m)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+17
+
+Implementation with DFS
+❑
+
+❑
+
+Simulate the algorithm by
+using depth-first search
+O(n+m) time.
+
+Algorithm topologicalDFS(G)
+Input dag G
+Output topological ordering of G
+n  G.numVertices()
+for all u  G.vertices()
+setLabel(u, UNEXPLORED)
+for all v  G.vertices()
+if getLabel(v) = UNEXPLORED
+topologicalDFS(G, v)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Algorithm topologicalDFS(G, v)
+Input graph G and a start vertex v of G
+Output labeling of the vertices of G
+in the connected component of v
+setLabel(v, VISITED)
+for all e  G.outEdges(v)
+{ outgoing edges }
+w  opposite(v,e)
+if getLabel(w) = UNEXPLORED
+{ e is a discovery edge }
+topologicalDFS(G, w)
+else
+{ e is a forward or cross edge }
+Label v with topological number n
+nn-1
+
+F28DA 2019-20
+
+18
+
+Topological Sorting Example
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+19
+
+Topological Sorting Example
+
+9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+20
+
+Topological Sorting Example
+
+8
+9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+21
+
+Topological Sorting Example
+
+7
+8
+9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+22
+
+Topological Sorting Example
+
+6
+
+7
+8
+9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+23
+
+Topological Sorting Example
+
+6
+
+5
+
+7
+8
+9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+24
+
+Topological Sorting Example
+
+4
+6
+
+5
+
+7
+8
+9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+25
+
+Topological Sorting Example
+3
+4
+6
+
+5
+
+7
+8
+9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+26
+
+Topological Sorting Example
+2
+3
+4
+6
+
+5
+
+7
+8
+9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+27
+
+Topological Sorting Example
+2
+
+1
+
+3
+4
+6
+
+5
+
+7
+8
+9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+28
+
+Java Implementation
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+29
+
+Summary
+❑
+❑
+
+Directed Graphs
+Algorithms for Directed Graphs
+◼
+◼
+◼
+◼
+
+DFS and BFS
+Strong Connectivity
+Transitive Closure
+DAG and Topological Ordering
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+30
+
+Further reading
+❑
+
+Data Structures and Algorithms in Java, 6th
+edition, by M. T. Goodrich, R. Tamassia, and
+M. H. Goldwasser, Wiley, 2014
+◼
+
+❑
+
+Chapter 14
+
+Data Structures and Algorithm Analysis, by
+Clifford A. Shaffer, 2013
+◼
+
+Chapter 11
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+31
+
+

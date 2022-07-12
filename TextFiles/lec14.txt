@@ -1,0 +1,701 @@
+F28DA 2019-20 Semester 1
+
+Data Structures and Algorithms
+Lecture 14: Task networks, Critical paths
+Manuel Maarek (Edinburgh)
+Lucine Gharibian (Dubai)
+
+F28DA 2019-20
+
+1
+
+Overview
+❑
+❑
+
+Task networks
+Critical paths
+
+F28DA 2019-20
+
+2
+
+Task Networks and PERT Charts
+
+❑
+
+❑
+
+❑
+
+❑
+
+Suppose we are managing a large
+project, and have to decide who does
+what, when, so it all gets done on time.
+Each project has a number of
+component activities called tasks.
+Each task has a duration (time to
+complete task).
+Each task is linked into network.
+F28DA 2019-20
+
+3
+
+PERT chart
+❑
+
+❑
+
+❑
+
+❑
+
+❑
+
+The network specifies predecessor tasks (which must
+be accomplished before it can be started) and
+successor tasks which cannot be started until the
+task is complete.
+This information can be illustrated in a PERT (Project
+Evaluation and Review Technique) chart.
+PERT graphs and algorithms are also called the
+Critical Path Method (CPM)
+They are widely used in project management, and
+supported by many tools e.g., MS Project will
+generate PERT charts.
+Apollo moon project had 10,000 tasks!
+F28DA 2019-20
+
+4
+
+Critical path
+If the completion time of a task on the
+critical path slips, then completion time of
+whole project will slip!
+❑ Tasks lying outside critical path have have
+some slack time. But If they exceed planned
+duration by more than their slack time, then
+they will hold up project.
+❑
+
+F28DA 2019-20
+
+5
+
+Software tools for project management
+There are lots of software tools developed to help
+people plan projects, using these basic ideas.
+❑ May calculate critical path for you, and
+provide other views on project data
+(milestones, resource consumption etc).
+❑ Underlying task network may be represented as a
+graph, and graph algorithms used to analyze it.
+– Directed acyclic graph, where nodes are labelled
+with task duration.
+– Referred to as task networks.
+❑
+
+F28DA 2019-20
+
+6
+
+Critical Path Method (CPM)
+Elements: Activities & Events
+Feature: Precedence relations
+Activity
+A
+
+Duration
+4
+
+Precedence
+-
+
+B
+C
+
+5
+3
+
+A
+
+D
+
+3
+
+A
+
+E
+
+2
+
+B, C
+
+Activities Table
+F28DA 2019-20
+
+7
+
+Critical Path Method (CPM)
+Graphical representation :
+
+Activities :
+(edges)
+
+C
+T
+(Time reqd. for activity)
+
+Events :
+(vertices)
+
+F28DA 2019-20
+
+8
+
+Critical Path Method (CPM)
+Precedence:
+Activities B & C precede Activity E
+B
+
+E
+C
+This “Event” cannot occur before both
+activities B & C have been completed
+F28DA 2019-20
+
+9
+
+Critical Path Method: Example
+
+Activity
+A
+B
+C
+D
+E
+
+Duration
+4
+5
+3
+3
+2
+F28DA 2019-20
+
+Precedence
+A
+A
+B, C
+10
+
+Critical Path Method (CPM)
+The project sequence graph is constructed:
+D
+A
+
+Project
+Start
+
+C
+
+Now what ???
+
+B
+E
+
+Project
+End
+F28DA 2019-20
+
+11
+
+Critical Path Method (CPM)
+❑
+
+❑
+
+Events are consolidated to provide the
+specified precedence.
+“Dummy” activities are added if necessary.
+A
+D
+
+Project
+Start
+
+B
+
+C
+Project
+End
+E
+
+F28DA 2019-20
+
+12
+
+Dummy Activity Example
+To be able to bolt a bracket to a panel, the
+operations required are :
+◼
+◼
+◼
+◼
+
+Design bracket
+Build bracket
+Build panel
+Drill holes in panel
+
+A
+
+D
+C
+
+A
+
+A
+B
+C
+D
+
+A
+A,C
+
+B
+
+C
+F28DA 2019-20
+
+D
+
+A
+
+B
+
+C
+
+D
+13
+
+Critical Path Method (CPM)
+❑
+
+Activity times (duration) are added next :
+
+A
+4
+Project
+Start
+
+B
+5
+
+3 C
+
+D
+3
+
+Project
+End
+
+E
+2
+F28DA 2019-20
+
+14
+
+Critical Path Method (CPM)
+The CRITICAL PATH is the path through the project
+on which any delay will cause the completion of the
+entire project to be delayed:
+
+A
+4
+Project
+Start
+
+B
+5
+
+3 C
+
+D
+3
+E
+2
+
+F28DA 2019-20
+
+Project
+End
+
+15
+
+Critical Path Method (CPM)
+❑
+
+❑
+
+❑
+
+For fairly simple projects, the critical path is
+usually the longest path through the project.
+For projects with several parallel and interlinked
+activities, this may not always be the case.
+
+For more complicated projects, the critical path
+can be determined with an ‘earliest time’
+forward sweep through the diagram followed by
+a ‘latest time’ reverse sweep.
+F28DA 2019-20
+
+16
+
+Critical Path Method (CPM)
+
+The EARLIEST starting time of each activity is associated
+with the events. It corresponds to the longest time of
+any path from any previous event.
+4
+0
+Project
+Start
+
+A
+4
+
+B
+5
+
+3 C
+7
+
+F28DA 2019-20
+
+D
+3
+
+E
+2
+
+Project
+End
+9
+
+17
+
+Critical Path Method (CPM)
+
+The LATEST starting time of each activity is also
+associated with the events. It corresponds to the
+longest time of any path from any subsequent event.
+
+0
+0
+Project
+Start
+
+A
+4
+
+B
+5
+
+4
+4
+3 C
+7
+7
+
+F28DA 2019-20
+
+D
+3
+
+E
+2
+
+Project
+End
+9
+9
+
+18
+
+Critical Path Method (CPM)
+
+The CRITICAL PATH is the path along which the earliest
+time and latest time are the same for all events, and
+the early start time plus activity time for any activity
+equals the early start time of the next activity.
+
+0
+0
+Project
+Start
+
+A
+4
+B
+
+5
+
+4
+4
+
+3 C
+7
+7
+F28DA 2019-20
+
+D
+3
+
+E
+2
+
+Project
+End
+9
+9
+19
+
+Critical Path Method (CPM)
+❑
+❑
+
+This project cannot be completed in less than 9 weeks
+given the expected duration of the activities.
+However, activities B & D could be delayed or
+extended by up to 2 weeks each without affecting the
+minimum project completion time. This is termed
+‘float’ or ‘slack’ time.
+
+0
+0
+Project
+Start
+
+A
+4
+
+B
+5
+
+4
+4
+3 C
+7
+7
+F28DA 2019-20
+
+D
+3
+
+Project
+End
+
+E
+2
+
+9
+9
+20
+
+Example
+Activity
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+
+Duration
+3
+3
+4
+1
+3
+2
+2
+4
+1
+3
+5
+F28DA 2019-20
+
+Precedence
+A
+C
+B, D
+A, B, D
+C, F
+G
+C
+E, G
+F, H, I
+21
+
+Example
+Activity
+
+Duration
+
+Earliest
+Start
+
+Latest
+Start
+
+Float
+
+A
+
+3
+
+0
+
+0
+
+0
+
+B
+
+3
+
+3
+
+3
+
+0
+
+C
+
+4
+
+0
+
+1
+
+1
+
+D
+
+1
+
+4
+
+5
+
+1
+
+E
+
+3
+
+6
+
+13
+
+7
+
+F
+
+2
+
+6
+
+6
+
+0
+
+G
+
+2
+
+8
+
+8
+
+0
+
+H
+
+4
+
+10
+
+10
+
+0
+
+I
+
+1
+
+4
+
+13
+
+9
+
+J
+
+3
+
+10
+
+16
+
+6
+
+K
+
+5
+
+14
+
+14
+
+0
+
+F28DA 2019-20
+
+22
+
+Summary: CPM Steps
+❑
+
+List all activities and expected durations.
+
+❑
+
+Construct CPM diagram for activities list.
+
+❑
+
+❑
+
+❑
+
+Determine EARLIEST start time for each event
+(working forward from project start).
+Determine LATEST start time for each event
+(working backwards from project end).
+
+Identify the CRITICAL PATH (and the ‘float’
+time for any non-critical activities).
+F28DA 2019-20
+
+23
+
+

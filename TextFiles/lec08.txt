@@ -1,0 +1,389 @@
+F28DA 2019-20 Semester 1
+
+Data Structures and Algorithms
+Lecture 8: Simple Cryptography
+Manuel Maarek (Edinburgh)
+Lucine Gharibian (Dubai)
+
+F28DA 2019-20
+
+1
+
+Outline
+❑
+❑
+❑
+
+Cryptography introduction
+Simple symmetric methods
+Pseudo-keys
+
+F28DA 2019-20
+
+2
+
+Cryptography: Motivation
+❑
+
+Many areas have sensitive information, e.g.
+◼
+
+◼
+
+◼
+◼
+
+❑
+
+Finance: many transactions encrypted, e.g. PIN on
+ATM card
+Commerce: sensitive negotiations, electronic
+commerce
+Military: battle plan, weapon control
+Diplomacy: sensitive negotiations
+
+In each case:
+◼
+◼
+
+◼
+
+Trying to communicate at a distance.
+Others could easily eavesdrop, or insert messages
+You don’t want them to know the content of your
+message (e.g., credit card details; battle plan)
+F28DA 2019-20
+
+3
+
+Cryptography: Motivation
+❑
+
+❑
+
+So use some secret writing technique(s) so the
+message can only be understood by intended
+recipient
+Predates computing, although early computers
+were developed to break encryption, e.g. the
+Enigma code
+
+F28DA 2019-20
+
+4
+
+Secret Writing Methods
+Two alternatives:
+❑ Steganography: hidden writing, e.g. invisible ink,
+using low-definition bits of sound/graphics files.
+Big advantage: don’t reveal to enemy that you
+have information to hide
+❑ Cryptology: scramble the message. Has two
+disciplines:
+◼
+
+◼
+
+Cryptography: developing codes/ciphers
+Cryptanalysis: breaking codes/ciphers
+
+F28DA 2019-20
+
+5
+
+Cryptographic Terminology
+❑
+
+There are two main encryption methods:
+◼
+
+◼
+
+❑
+
+❑
+
+Transposition: reorder character/word by another
+Substitution: replace 1 character/word by another
+
+Either method can be applied to words or characters:
+Codes operate on words, where Ciphers operate on
+characters
+Encryption methods may be
+◼
+
+◼
+
+Symmetric: same key used by sender and receiver. Hence vital
+that key doesn’t get into hands of the enemy
+Asymmetric: sender uses one key to encrypt, receiver uses
+another to decrypt. Hence senders key may be public.
+
+F28DA 2019-20
+
+6
+
+Encryption Example
+Plaintext message
+
+A typical method:
+“attack at dawn”
+◼
+Sender transmits key to receiver
+Key
+(may need to be over a secure
+Sender
+Receiver
+channel)
+Ciphertext
+◼
+Sender encrypts plaintext using
+key to produce ciphertext
+◼
+Sender transmits ciphertext over
+insecure channel
+Enemy
+◼
+Receiver uses key to decrypt
+ciphertext.
+❑ Enemy or cryptanalyst intercepts message and attempts to break
+the encryption, i.e. decrypt it without the key.
+Must be sufficiently hard to break the encryption that it isn’t worth the
+enemies time!
+F28DA 2019-20
+
+7
+
+Symmetric Methods
+Columnar Transposition Cipher
+❑
+
+❑
+
+To encrypt: Write the plaintext in columns of depth k (=
+key), padding (with *) the end as necessary, read off in
+rows, e.g. if key = 4
+Plaintext:
+Transposition ciphers are easy!
+T
+r
+a
+n
+
+❑
+❑
+
+❑
+
+s
+p
+o
+s
+
+i
+t
+i
+o
+
+n
+_
+c
+i
+
+p
+h
+e
+r
+
+s
+_
+a
+r
+
+e
+_
+e
+a
+
+s
+y
+!
+*
+
+Ciphertext:
+Tsinpsesrpt h yaoiceae!nsoirra*
+To decrypt: write ciphertext as rows of (message
+length/k), and read off columns
+To break: try every key between 1 and message length
+(easy)
+F28DA 2019-20
+
+8
+
+Caesar Cipher
+A Substitution Cipher
+❑
+❑
+
+Key = k (some small integer)
+To encrypt: replace Nth letter of alphabet with (N+k)th,
+e.g. k = 2
+
+a b c d e f g h i j k l m n o p q r s t u v w x y z _
+c d e f g h i j k l m n o p q r s t u v w x y z _ a b
+❑
+
+❑
+❑
+
+So plaintext attack is encrypted as cvvcem
+
+To decrypt: Replace Nth letter by (N-k)th
+To break: Try all values of k until get something
+meaningful (very easy!)
+
+F28DA 2019-20
+
+9
+
+Simple Substitution Cipher
+❑
+
+To encrypt: Use a fixed permutation of the alphabet as the
+key, i.e. map each character to another e.g.,
+
+a b c d e f g h i j k l m n o p q r s t u v w x y z _
+q w e r t y u i o p a s d f g h j k l z x c v b n _ m
+❑
+❑
+
+So plaintext badly is encrypted as wqrsn
+To break: You might think this would be hard to break:
+there is an enormous choice of keys (26!), but providing
+there’s enough cipher text it’s easy to break using simple
+statistical methods
+The occurrence frequencies of each character in a language is well
+known, e.g. in English ’e’ is most common, then ’t’ etc.
+◼ Also look for common short words, e.g. digrams (’an’, ’at’,’as’) and
+trigrams (’the’, ’and’)
+Exercise: Use the permutation above to encrypt three_million
+◼
+
+❑
+
+F28DA 2019-20
+
+10
+
+Vigenere Cipher
+❑
+
+Like simple Caeser cipher, but use a repeated key to
+specify “k” for each character in plaintext:
+key: abc = (k values 1, 2 3)
+plaintext:
+attack
+key
+abcabc..
+k
+123123
+ciphertext:
+bvwben
+
+❑
+
+❑
+
+Harder to decrypt. Can’t use character frequencies, and
+with long key, will take a long time to try all possible
+keys
+Exercise: Use the Vignere cipher to encrypt three_million
+using key bad
+F28DA 2019-20
+
+11
+
+Vernam Cipher (One time pad)
+Use above method, but with key as long as plaintext
+❑ Only use it once!
+VERY secure; no way to decrypt as equally likely to end up with any
+message at all
+Problems memorizing/distributing key. But useful in situations where a
+key can be sent ahead of time
+Possible keys:
+❑ A book: Alice in Wonderland, edition X, starting on page 102, line 4
+❑ Pads containing 100s of pages of keys
+❑
+
+Exercise: Use the Vignere cipher to encrypt three_million using
+key sadbadmadladhad
+Exercise: Is sadbadmadladhad a good key? Why?
+F28DA 2019-20
+
+12
+
+Simple Cryptanalysis Methods
+How do we break ciphertexts?
+❑ Brute force: try all possible keys
+❑ Statistical: look at character frequencies
+❑ Cribs: Look for known parts of message e.g.,
+email/html header, date, time, spaces
+❑ Or a combination. Try all likely combinations,
+once other methods have suggested most likely
+ones
+
+F28DA 2019-20
+
+13
+
+Pseudo keys
+How do we approximate the security of the one-time pad, without the
+overhead of needing a very long key?
+❑ Generate a very long (longer than plaintext) key from a shorter ones, in
+a pseudo- random fashion
+❑ For example a simple encryption machine, takes the ’true’ key
+(cryptovariable):
+◼
+
+◼
+
+❑
+❑
+
+Generates long key from it as a stream of bits
+XORs this with the binary of the plaintext
+true key:
+16256
+pseudokey:
+100101100011..
+plaintext:
+1001110100..
+ciphertext:
+0000101100
+
+Decrypt using exactly same method
+Exercise: Locate and experiment with a Java pseudorandom number
+generator
+F28DA 2019-20
+
+14
+
+Summary
+❑
+
+❑
+
+❑
+
+Simple Symmetric methods: Columnar
+trans. Caesar, Vernam
+Simple codes & ciphers broken using
+frequencies, cribs, brute force
+Pseudo-keys: long keys generated from
+shorter ones; harder to break
+
+F28DA 2019-20
+
+15
+
+

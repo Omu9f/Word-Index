@@ -1,0 +1,1721 @@
+F28DA 2019-20 Semester 1
+
+Data Structures and Algorithms
+Lecture 3: Sorting
+Manuel Maarek (Edinburgh)
+Lucine Gharibian (Dubai)
+7 29 4 → 2 4 7 9
+
+72 → 2 7
+7→7
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+2→2
+
+94 → 4 9
+9→9
+
+4→4
+
+1
+
+Outline
+❑
+❑
+
+Comparator ADT
+Greedy sorting algorithms and design
+◼
+◼
+
+Selection-Sort
+Insertion-Sort
+
+❑
+
+Heap-Sort
+
+❑
+
+Divide and conquer sorting algorithms
+and design
+◼
+
+◼
+
+Merge-Sort
+Quick-Sort
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+2
+
+General Comments on Sorting
+▪ Given a sequence S of elements to sort, and possibly a
+comparator C for comparing elements of S
+
+▪ for most general implementation, a comparator should be used
+▪ Same algorithm used for non-decreasing/non-increasing order sorting
+
+▪ in-place vs. not in-place sorting:
+
+▪ In-place: Sorting is done in the original sequence S itself
+▪ If a sorting algorithm needs more than a constant amount of
+additional space (for example, another sequence of size S.size() ) the
+algorithm is said to be not in-place
+▪ In general, in-place algorithm should be preferred when we don’t
+want to waste space
+
+▪ recursive vs. non-recursive:
+
+▪ A sorting algorithm may be recursive or non-recursive
+▪ a non-recursive and a recursive algorithms may have the same
+asymptotic (big-O) complexity, but in practice, non-recursive code is
+usually faster and should be preferred
+▪ recursive code is easier to write and understand, with practice ☺
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+3
+
+Comparator ADT
+❑
+
+❑
+
+A comparator encapsulates
+the action of comparing two
+objects according to a given
+total order relation
+Mathematical concept of
+total order relation 
+◼ Comparability property:
+either x  y or y  x
+◼ Antisymmetric property:
+x  y and y  x  x = y
+◼ Transitive property:
+x  y and y  z  x  z
+◼ Reflexivity property:
+xx
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+❑
+
+❑
+
+Primary method of the
+Comparator ADT
+compare(a, b): returns an
+integer i such that
+◼
+◼
+◼
+◼
+
+F28DA 2019-20
+
+i < 0 if a < b,
+i = 0 if a = b
+i > 0 if a > b
+An error occurs if a and b
+cannot be compared.
+
+4
+
+Example Comparator
+❑
+
+Lexicographic comparison of 2-D
+points:
+
+/** Comparator for 2D points under the
+standard lexicographic order. */
+public class Lexicographic implements
+Comparator {
+int xa, ya, xb, yb;
+public int compare(Object a, Object b)
+throws ClassCastException {
+xa = ((Point2D) a).getX();
+ya = ((Point2D) a).getY();
+xb = ((Point2D) b).getX();
+yb = ((Point2D) b).getY();
+if (xa != xb)
+return (xb - xa);
+else
+return (yb - ya);
+}
+}
+© 2014 Goodrich, Tamassia, Goldwasser
+
+❑
+
+Point objects:
+
+/** Class representing a point in the
+plane with integer coordinates */
+public class Point2D
+{
+protected int xc, yc; // coordinates
+public Point2D(int x, int y) {
+xc = x;
+yc = y;
+}
+public int getX() {
+return xc;
+}
+public int getY() {
+return yc;
+}
+}
+
+F28DA 2019-20
+
+5
+
+Selection
+Insertion
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+6
+
+Selection-Sort
+Have array A of size n, indexes range from 0 to n - 1
+❑ Basic Idea is to iterate n times:
+❑
+
+Find the ith smallest element in the array A
+Insert this element in the i th location of the array A
+After ith iteration, elements in range 0…i - 1 of A in correct
+
+position
+
+3 4 5 1 9 5 2
+
+1 4 5 3 9 5 2
+
+1 2 5 3 9 5 4
+
+1 2 3 5 9 5 4
+
+1 2 3 4 9 5 5
+
+1 2 3 4 5 9 5
+
+1 2 3 4 5 5 9
+
+1 2 3 4 5 5 9
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+7
+
+Selection-Sort
+Algorithm SelectSort(A,n)
+Input: Array A and its size n
+Output: Sorts elements of A in non-decreasing order
+for i = 0 to n - 2
+//First find ith smallest element
+minIndex = i
+for j = i + 1 to n-1
+if A[j] < A[minIndex] then
+minIndex = j
+// now swap the smallest element with ith element
+temp = A[minIndex]
+A[minIndex] = A[i]
+A[i] = temp
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+8
+
+Selection-Sort Complexity
+▪
+▪
+
+First for loop is performed
+n-1 times
+The second for loop is
+performed n -1- i times for
+each fixed i
+▪
+
+Total time is
+n−2
+
+n −1
+
+i =0
+
+i =1
+
+ (n − 1 − i ) =  i =
+=
+
+▪
+▪
+
+(n − 1)n
+2
+
+for i = 0 to n - 2
+minIndex = i
+for j = i + 1 to n-1
+if A[j] < A[minIndex] then
+minIndex = j
+temp = A[minIndex]
+A[minIndex] = A[i]
+A[i] = temp
+
+= O(n2 )
+
+All other operations inside the for loops take constant amount of
+time. Thus total running time is O(n2)
+This is the running time is independent of the contents of array A,
+that is it is the best, worst, and average case running time
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+9
+
+Insertion-Sort
+▪
+
+▪
+▪
+
+Basic Idea:
+
+after iteration i, array A should be sorted in the range 0…i
+However elements in range 0…i are not necessarily in their
+final correct positions after iteration i
+
+3 4 5 1 9 5 2
+
+3 4 1 5 9 5 2
+
+3 1 4 5 9 5 2
+
+1 3 4 5 9 5 2
+
+1 3 4 5 5 9 2
+
+1 3 4 5 5 2 9
+
+1 3 4 5 2 5 9
+
+1 3 4 2 5 5 9
+
+1 3 2 4 5 5 9
+
+1 2 3 4 5 5 9
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+10
+
+Insertion-Sort
+Algorithm InsertSort(A,n)
+Output: Sorts elements of A in non-decreasing order
+for i = 1 to n - 1
+// first find correct position for element A[i] so that
+// subarray A[0… i] stays sorted
+x = A[i]
+j=i-1
+while j  0 and A[j]> x do
+A[j+1] = A[j]
+j = j-1
+// the correct position for x is j+1, put x in that position
+A[j + 1] = x
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+11
+
+Insertion-Sort Complexity
+▪ for loop is performed n - 1
+times
+▪ while loop is performed for
+each fixed i
+▪ i times in the worst case
+▪ 0 times in the best case, this is
+when sub-array A[0…i] is
+already sorted
+
+for i = 1 to n - 1
+x = A[i]
+j=i-1
+while j  0 and A[j]> x do
+A[j+1] = A[j]
+j = j-1
+A[j + 1] = x
+
+▪ All other statements take
+constant amount of time
+▪ Thus in the best case, insertion sort is O(n)
+▪ In the worst case, insertion sort is O(n2)
+n −1
+
+i
+i =1
+
+=
+
+(n − 1)n
+2
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+12
+
+Heap-Sort
+▪ Have an array A of size n, indexes range from 0 to n - 1
+▪ For sorting in non-increasing order, use max-heap, for
+sorting in non-decreasing order, use min-heap
+▪ Assume we need to sort in non-decreasing order
+H = new empty min-heap
+for i = 0 to n - 1
+H.insert(A[i])
+for i = 0 to n - 1
+A[i] = H.deleteMin()
+
+▪ Complexity: O(n log n)
+▪ Need O(n) additional space for the heap data structure
+▪ We can implement heap-sort in-place (without additional
+space) by reusing the input array A for the heap
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+13
+
+Divide-and-Conquer
+❑
+
+Divide-and conquer is a
+general algorithm design
+paradigm:
+◼
+
+◼
+
+◼
+
+❑
+
+❑
+
+Divide: divide the input data S in
+two or more disjoint subsets S1,
+S2, …
+Conquer: solve the subproblems
+recursively
+Combine: combine the solutions
+for S1, S2, …, into a solution for S
+
+The base case for the
+recursion are subproblems of
+constant size
+Analysis can be done using
+recurrence equations
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+14
+
+Merge-Sort
+7 29 4 → 2 4 7 9
+72 → 2 7
+
+7→7
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+2→2
+
+F28DA 2019-20
+
+94 → 4 9
+
+9→9
+
+4→4
+
+15
+
+Merge-Sort
+❑
+
+Merge-sort on an input
+sequence S with n
+elements consists of
+three steps:
+◼
+
+◼
+
+◼
+
+Divide: partition S into
+two sequences S1 and S2
+of about n/2 elements
+each
+Conquer: recursively sort
+S1 and S2
+Combine: merge S1 and
+S2 into a unique sorted
+sequence
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Algorithm mergeSort(S)
+Input sequence S with n
+elements
+Output sequence S sorted
+according to C
+if S.size() > 1
+(S1, S2)  partition(S, n/2)
+mergeSort(S1)
+mergeSort(S2)
+S  merge(S1, S2)
+
+F28DA 2019-20
+
+16
+
+Merging Two Sorted Sequences
+❑
+
+❑
+
+The conquer step of
+merge-sort consists
+of merging two
+sorted sequences A
+and B into a sorted
+sequence S
+containing the union
+of the elements of A
+and B
+Merging two sorted
+sequences, each
+with n/2 elements
+and implemented by
+means of a doubly
+linked list, takes
+O(n) time
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Algorithm merge(A, B)
+Input sequences A and B with
+n/2 elements each
+Output sorted sequence of A  B
+S  empty sequence
+while A.isEmpty()  B.isEmpty()
+if A.first().element() < B.first().element()
+S.addLast(A.remove(A.first()))
+else
+S.addLast(B.remove(B.first()))
+while A.isEmpty()
+S.addLast(A.remove(A.first()))
+while B.isEmpty()
+S.addLast(B.remove(B.first()))
+return S
+
+F28DA 2019-20
+
+17
+
+Java Merge Implementation
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+18
+
+Java Merge-Sort Implementation
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+19
+
+Merge-Sort Tree
+❑
+
+An execution of merge-sort is depicted by a binary tree
+◼
+
+each node represents a recursive call of merge-sort and stores
+ unsorted sequence before the execution and its partition
+ sorted sequence at the end of the execution
+
+◼
+◼
+
+the root is the initial call
+the leaves are calls on subsequences of size 0 or 1
+
+7 2
+7
+
+
+
+
+
+9 4 → 2 4 7 9
+
+2 → 2 7
+
+7→7
+
+2→2
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+9
+
+
+
+4 → 4 9
+
+9→9
+
+F28DA 2019-20
+
+4→4
+20
+
+Execution Example
+❑
+
+Partition
+7 2 9 43 8 6 1 → 1 2 3 4 6 7 8 9
+
+7 2 9 4 → 2 4 7 9
+
+7 2 → 2 7
+
+7→7
+
+2→2
+
+3 8 6 1 → 1 3 8 6
+
+9 4 → 4 9
+
+9→9
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+4→4
+
+3 8 → 3 8
+
+3→3
+
+F28DA 2019-20
+
+8→8
+
+6 1 → 1 6
+
+6→6
+
+1→1
+21
+
+Execution Example (cont.)
+❑
+
+Recursive call, partition
+7 2 9 43 8 6 1 → 1 2 3 4 6 7 8 9
+
+7 29 4→ 2 4 7 9
+
+7 2 → 2 7
+
+7→7
+
+2→2
+
+3 8 6 1 → 1 3 8 6
+
+9 4 → 4 9
+
+9→9
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+4→4
+
+3 8 → 3 8
+
+3→3
+
+F28DA 2019-20
+
+8→8
+
+6 1 → 1 6
+
+6→6
+
+1→1
+22
+
+Execution Example (cont.)
+❑
+
+Recursive call, partition
+7 2 9 43 8 6 1 → 1 2 3 4 6 7 8 9
+
+7 29 4→ 2 4 7 9
+
+72→2 7
+
+7→7
+
+2→2
+
+3 8 6 1 → 1 3 8 6
+
+9 4 → 4 9
+
+9→9
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+4→4
+
+3 8 → 3 8
+
+3→3
+
+F28DA 2019-20
+
+8→8
+
+6 1 → 1 6
+
+6→6
+
+1→1
+23
+
+Execution Example (cont.)
+❑
+
+Recursive call, base case
+7 2 9 43 8 6 1 → 1 2 3 4 6 7 8 9
+
+7 29 4→ 2 4 7 9
+
+72→2 7
+
+7→7
+
+2→2
+
+3 8 6 1 → 1 3 8 6
+
+9 4 → 4 9
+
+9→9
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+4→4
+
+3 8 → 3 8
+
+3→3
+
+F28DA 2019-20
+
+8→8
+
+6 1 → 1 6
+
+6→6
+
+1→1
+24
+
+Execution Example (cont.)
+❑
+
+Recursive call, base case
+7 2 9 43 8 6 1 → 1 2 3 4 6 7 8 9
+
+7 29 4→ 2 4 7 9
+
+72→2 7
+
+7→7
+
+2→2
+
+3 8 6 1 → 1 3 8 6
+
+9 4 → 4 9
+
+9→9
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+4→4
+
+3 8 → 3 8
+
+3→3
+
+F28DA 2019-20
+
+8→8
+
+6 1 → 1 6
+
+6→6
+
+1→1
+25
+
+Execution Example (cont.)
+❑
+
+Merge
+7 2 9 43 8 6 1 → 1 2 3 4 6 7 8 9
+
+7 29 4→ 2 4 7 9
+
+72→2 7
+
+7→7
+
+2→2
+
+3 8 6 1 → 1 3 8 6
+
+9 4 → 4 9
+
+9→9
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+4→4
+
+3 8 → 3 8
+
+3→3
+
+F28DA 2019-20
+
+8→8
+
+6 1 → 1 6
+
+6→6
+
+1→1
+26
+
+Execution Example (cont.)
+❑
+
+Recursive call, …, base case, merge
+7 2 9 43 8 6 1 → 1 2 3 4 6 7 8 9
+
+7 29 4→ 2 4 7 9
+
+72→2 7
+
+7→7
+
+2→2
+
+3 8 6 1 → 1 3 8 6
+
+9 4 → 4 9
+
+9→9
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+4→4
+
+3 8 → 3 8
+
+3→3
+
+F28DA 2019-20
+
+8→8
+
+6 1 → 1 6
+
+6→6
+
+1→1
+27
+
+Execution Example (cont.)
+❑
+
+Merge
+7 2 9 43 8 6 1 → 1 2 3 4 6 7 8 9
+
+7 29 4→ 2 4 7 9
+
+72→2 7
+
+7→7
+
+2→2
+
+3 8 6 1 → 1 3 8 6
+
+9 4 → 4 9
+
+9→9
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+4→4
+
+3 8 → 3 8
+
+3→3
+
+F28DA 2019-20
+
+8→8
+
+6 1 → 1 6
+
+6→6
+
+1→1
+28
+
+Execution Example (cont.)
+❑
+
+Recursive call, …, merge, merge
+7 2 9 43 8 6 1 → 1 2 3 4 6 7 8 9
+
+7 29 4→ 2 4 7 9
+
+72→2 7
+
+7→7
+
+2→2
+
+3 8 6 1 → 1 3 6 8
+
+9 4 → 4 9
+
+9→9
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+4→4
+
+3 8 → 3 8
+
+3→3
+
+F28DA 2019-20
+
+8→8
+
+6 1 → 1 6
+
+6→6
+
+1→1
+29
+
+Execution Example (cont.)
+❑
+
+Merge
+7 2 9 43 8 6 1 → 1 2 3 4 6 7 8 9
+
+7 29 4→ 2 4 7 9
+
+72→2 7
+
+7→7
+
+2→2
+
+3 8 6 1 → 1 3 6 8
+
+9 4 → 4 9
+
+9→9
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+4→4
+
+3 8 → 3 8
+
+3→3
+
+F28DA 2019-20
+
+8→8
+
+6 1 → 1 6
+
+6→6
+
+1→1
+30
+
+Non-Recursive Merge-Sort
+▪ Recursive implementation is less efficient (by a
+constant factor) than non-recursive implementation
+▪ Merge-sort can be implemented non-recursively
+▪ At iteration i, break the sequence into groups of size 2i-1
+▪ 2,4,8,…
+
+▪ Merge 2 nearby groups together
+
+7 2 9 4 3 8 6 1
+
+i=1
+
+7 2 9 4 3 8 6 1
+
+i=2
+
+2 7 4 9 3 8 1 6
+
+i=3
+
+2 4 7 9 1 3 6 8
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+2 7 4 9 3 8 1 6
+2 4 7 9 1 3 6 8
+1 2 3 4 6 7 8 9
+
+31
+
+Analysis of Merge-Sort
+❑
+
+The height h of the merge-sort tree is O(log n)
+at each recursive call we divide in half the sequence,
+
+◼
+
+❑
+
+The overall amount or work done at the nodes of depth i is O(n)
+we partition and merge 2i sequences of size n/2i
+we make 2i+1 recursive calls
+
+◼
+◼
+
+❑
+
+Thus, the total running time of merge-sort is O(n log n)
+depth #seqs size
+0
+
+1
+
+n
+
+1
+
+2
+
+n/2
+
+i
+
+2i
+
+n/2i
+
+…
+
+…
+
+…
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+32
+
+Quick-Sort
+7 4 9 6 2 → 2 4 6 7 9
+
+4 2 → 2 4
+2→2
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+7 9 → 7 9
+9→9
+
+F28DA 2019-20
+
+33
+
+Quick-Sort
+❑
+
+Quick-sort is a randomized
+sorting algorithm based
+on the divide-and-conquer
+paradigm:
+◼
+
+x
+
+Divide: pick a random
+element x (called pivot) and
+partition S into
+
+x
+
+ L elements less than x
+
+L
+
+ E elements equal x
+
+E
+
+G
+
+ G elements greater than x
+◼
+◼
+
+Recur: sort L and G
+Conquer: join L, E and G
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+x
+34
+
+Partition
+❑
+
+We partition an input
+sequence as follows:
+◼
+
+◼
+
+❑
+
+❑
+
+We remove, in turn, each
+element y from S and
+We insert y into L, E or G,
+depending on the result of
+the comparison with the
+pivot x
+
+Each insertion and removal
+is at the beginning or at the
+end of a sequence, and
+hence takes O(1) time
+Thus, the partition step of
+quick-sort takes O(n) time
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Algorithm partition(S, p)
+Input sequence S, position p of pivot
+Output subsequences L, E, G of the
+elements of S less than, equal to,
+or greater than the pivot, resp.
+L, E, G  empty sequences
+x  S.remove(p)
+E.addLast(x)
+while S.isEmpty()
+y  S.remove(S.first())
+if y < x
+L.addLast(y)
+else if y = x
+E.addLast(y)
+else { y > x }
+G.addLast(y)
+return L, E, G
+
+F28DA 2019-20
+
+35
+
+Java Implementation
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+36
+
+Quick-Sort Tree
+❑
+
+An execution of quick-sort is depicted by a binary tree
+◼
+
+Each node represents a recursive call of quick-sort and stores
+ Unsorted sequence before the execution and its pivot
+ Sorted sequence at the end of the execution
+
+◼
+◼
+
+The root is the initial call
+The leaves are calls on subsequences of size 0 or 1
+
+7 4 9 6 2 → 2 4 6 7 9
+
+4 2 → 2 4
+
+7 9 → 7 9
+
+2→2
+© 2014 Goodrich, Tamassia, Goldwasser
+
+9→9
+F28DA 2019-20
+
+37
+
+Execution Example
+❑
+
+Pivot selection
+7 2 9 43 7 6 1 → 1 2 3 4 6 7 8 9
+
+7 2 9 4 → 2 4 7 9
+
+2→2
+
+3 8 6 1 → 1 3 8 6
+
+9 4 → 4 9
+
+9→9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+3→3
+
+8→8
+
+4→4
+F28DA 2019-20
+
+38
+
+Execution Example (cont.)
+❑
+
+Partition, recursive call, pivot selection
+7 2 9 4 3 7 6 1→ 1 2 3 4 6 7 8 9
+
+2 4 3 1→ 2 4 7 9
+
+2→2
+
+3 8 6 1 → 1 3 8 6
+
+9 4 → 4 9
+
+9→9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+3→3
+
+8→8
+
+4→4
+F28DA 2019-20
+
+39
+
+Execution Example (cont.)
+❑
+
+Partition, recursive call, base case
+7 2 9 43 7 6 1→→ 1 2 3 4 6 7 8 9
+
+2 4 3 1 →→ 2 4 7
+
+1→1
+
+3 8 6 1 → 1 3 8 6
+
+9 4 → 4 9
+
+9→9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+3→3
+
+8→8
+
+4→4
+F28DA 2019-20
+
+40
+
+Execution Example (cont.)
+❑
+
+Recursive call, …, base case, join
+7 2 9 43 7 6 1→ 1 2 3 4 6 7 8 9
+
+2 4 3 1 → 1 2 3 4
+
+1→1
+
+3 8 6 1 → 1 3 8 6
+
+4 3 → 3 4
+
+9→9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+3→3
+
+8→8
+
+4→4
+F28DA 2019-20
+
+41
+
+Execution Example (cont.)
+❑
+
+Recursive call, pivot selection
+7 2 9 43 7 6 1→ 1 2 3 4 6 7 8 9
+
+2 4 3 1 → 1 2 3 4
+
+1→1
+
+7 9 7 1 → 1 3 8 6
+
+4 3 → 3 4
+
+9→9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+8→8
+
+9→9
+
+4→4
+F28DA 2019-20
+
+42
+
+Execution Example (cont.)
+❑
+
+Partition, …, recursive call, base case
+7 2 9 43 7 6 1→ 1 2 3 4 6 7 8 9
+
+2 4 3 1 → 1 2 3 4
+
+1→1
+
+7 9 7 1 → 1 3 8 6
+
+4 3 → 3 4
+
+9→9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+8→8
+
+9→9
+
+4→4
+F28DA 2019-20
+
+43
+
+Execution Example (cont.)
+❑
+
+Join, join
+7 2 9 4 3 7 6 1 →1 2 3 4 6 7 7 9
+
+2 4 3 1 → 1 2 3 4
+
+1→1
+
+7 9 7 → 17 7 9
+
+4 3 → 3 4
+
+9→9
+© 2014 Goodrich, Tamassia, Goldwasser
+
+8→8
+
+9→9
+
+4→4
+F28DA 2019-20
+
+44
+
+Worst-case Running Time
+❑
+
+❑
+❑
+
+❑
+
+The worst case for quick-sort occurs when the pivot is the unique
+minimum or maximum element
+One of L and G has size n − 1 and the other has size 0
+The running time is proportional to the sum
+n + (n − 1) + … + 2 + 1
+Thus, the worst-case running time of quick-sort is O(n2)
+depth time
+0
+
+n
+
+1
+
+n−1
+
+…
+
+…
+
+n−1
+
+1
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+45
+
+Expected Running Time
+❑
+
+Consider a recursive call of quick-sort on a sequence of size s
+◼
+
+◼
+
+Good call: the sizes of L and G are each less than 3s/4
+Bad call: one of L and G has size greater than 3s/4
+7 2 9 43 7 6 1
+
+7 2 9 43 7 6 19
+7 9 7 1 → 1
+
+2 4 3 1
+
+1
+
+7294376
+
+Good call
+❑
+
+Bad call
+
+A call is good with probability 1/2
+◼
+
+1/2 of the possible pivots cause good calls:
+
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+Bad pivots
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Good pivots
+F28DA 2019-20
+
+Bad pivots
+46
+
+Expected Running Time, Part 2
+❑
+
+❑
+
+Probabilistic Fact: The expected number of coin tosses required in
+order to get k heads is 2k
+For a node of depth i, we expect
+◼
+◼
+
+i/2 ancestors are good calls
+The size of the input sequence for the current call is at most (3/4)i/2n
+
+Therefore, we have
+◼
+
+◼
+
+time per level
+O(n)
+
+expected height
+s(r)
+
+For a node of depth 2log4/3n,
+the expected input size is one
+The expected height of the
+quick-sort tree is O(log n)
+
+The amount or work done at the
+nodes of the same depth is O(n)
+Thus, the expected running time
+of quick-sort is O(n log n)
+
+s(a)
+
+s(b)
+
+O(n)
+
+O(log n)
+s(c)
+
+s(d)
+
+s(e)
+
+s(f)
+
+O(n)
+
+total expected time: O(n log n)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+47
+
+In-Place Quick-Sort
+❑
+
+❑
+
+Quick-sort can be implemented
+to run in-place
+Algorithm inPlaceQuickSort(S, l, r)
+In the partition step, we use
+Input sequence S, ranks l and r
+replace operations to rearrange
+Output sequence S with the
+the elements of the input
+elements of rank between l and r
+sequence such that
+◼
+
+◼
+
+◼
+
+❑
+
+the elements less than the
+pivot have rank less than h
+the elements equal to the pivot
+have rank between h and k
+the elements greater than the
+pivot have rank greater than k
+
+The recursive calls consider
+◼
+◼
+
+elements with rank less than h
+elements with rank greater
+than k
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+rearranged in increasing order
+if l  r
+return
+i  a random integer between l and r
+x  S.elemAtRank(i)
+(h, k)  inPlacePartition(x)
+inPlaceQuickSort(S, l, h − 1)
+inPlaceQuickSort(S, k + 1, r)
+
+48
+
+In-Place Partitioning
+❑
+
+Perform the partition using two indices to split S into L
+and E U G (a similar method can split E U G into E and G).
+j
+k
+3 2 5 1 0 7 3 5 9 2 7 9 8 9 7 6 9
+
+❑
+
+(pivot = 6)
+
+Repeat until j and k cross:
+◼
+◼
+◼
+
+Scan j to the right until finding an element > x.
+Scan k to the left until finding an element < x.
+Swap elements at indices j and k
+
+j
+
+k
+
+3 2 5 1 0 7 3 5 9 2 7 9 8 9 7 6 9
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+49
+
+Java Implementation
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+50
+
+Summary of Sorting Algorithms
+Algorithm
+
+Time
+
+Notes
+
+selection-sort
+
+O(n2)
+
+▪ in-place
+▪ slow (good for small inputs)
+
+insertion-sort
+
+O(n2)
+
+▪ in-place
+▪ slow (good for small inputs)
+
+quick-sort
+
+O(n log n)
+expected
+
+▪ in-place, randomized
+▪ fastest (good for large inputs)
+
+O(n log n)
+
+▪ in-place
+▪ fast (good for large inputs)
+
+O(n log n)
+
+▪ sequential data access
+▪ fast (good for huge inputs)
+
+heap-sort
+
+merge-sort
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+51
+
+Further reading
+❑
+
+Data Structures and Algorithms in Java, 6th
+edition, by M. T. Goodrich, R. Tamassia, and
+M. H. Goldwasser, Wiley, 2014
+◼
+
+❑
+
+Chapters 9 and 12
+
+Data Structures and Algorithm Analysis, by
+Clifford A. Shaffer, 2013
+◼
+
+Chapter 7
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+52
+
+

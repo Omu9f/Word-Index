@@ -1,0 +1,2 @@
+addall
+search 3 algorithms

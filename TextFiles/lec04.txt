@@ -1,0 +1,774 @@
+F28DA 2019-20 Semester 1
+
+Data Structures and Algorithms
+Lecture 4: Maps
+Manuel Maarek (Edinburgh)
+Lucine Gharibian (Dubai)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+1
+
+Outline
+❑
+
+Lists (revision)
+◼
+
+◼
+◼
+
+❑
+
+Indexed List ADT (implemented with arrays)
+Positional List ADT (doubly-linked implementation)
+Iterators and interable interface
+
+Maps
+◼
+
+◼
+◼
+
+Maps ADT
+Entry ADT
+Simple list based maps
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+2
+
+Indexed List ADT (revision)
+❑
+
+The java.util.List interface includes the following methods:
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+3
+
+Example
+❑
+
+A sequence of Indexed List operations:
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+4
+
+Array Lists
+❑
+
+❑
+
+An obvious choice for implementing the Indexed
+List ADT is to use an array, A, where A[i] stores (a
+reference to) the element with index i.
+With a representation based on an array A, the
+get(i) and set(i, e) methods are easy to implement
+by accessing A[i] (assuming i is a legitimate
+index).
+
+A
+
+0 1 2
+© 2014 Goodrich, Tamassia, Goldwasser
+
+i
+F28DA 2019-20
+
+n
+5
+
+Insertion
+❑
+
+❑
+
+In an operation add(i, o), we need to make room
+for the new element by shifting forward the n - i
+elements A[i], …, A[n - 1]
+In the worst case (i = 0), this takes O(n) time
+
+A
+0 1 2
+
+i
+
+n
+
+0 1 2
+
+i
+
+n
+
+0 1 2
+
+o
+i
+
+A
+A
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+n
+6
+
+Element Removal
+❑
+
+❑
+
+In an operation remove(i), we need to fill the hole left by
+the removed element by shifting backward the n - i - 1
+elements A[i + 1], …, A[n - 1]
+In the worst case (i = 0), this takes O(n) time
+
+A
+0 1 2
+
+o
+i
+
+n
+
+0 1 2
+
+i
+
+n
+
+0 1 2
+
+i
+
+A
+A
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+n
+7
+
+Performance
+❑
+
+In an array-based implementation of a
+dynamic list:
+◼
+◼
+
+◼
+
+❑
+
+The space used by the data structure is O(n)
+Indexing the element at i takes O(1) time
+add and remove run in O(n) time
+
+In an add operation, when the array is full,
+instead of throwing an exception, we can
+replace the array with a larger one …
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+8
+
+Growable Array-based Array List
+❑
+
+❑
+
+❑
+
+Let push(o) be the operation
+that adds element o at the
+end of the list
+When the array is full, we
+replace the array with a
+larger one
+How large should the new
+array be?
+◼
+
+◼
+
+Incremental strategy: increase
+the size by a constant c
+Doubling strategy: double the
+size
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+Algorithm push(o)
+if t = S.length - 1 then
+A  new array of
+size …
+for i  0 to n-1 do
+A[i]  S[i]
+SA
+nn+1
+S[n-1]  o
+
+9
+
+Positional Lists (revision)
+❑
+
+❑
+
+❑
+
+To provide for a general abstraction of a sequence of
+elements with the ability to identify the location of an
+element, we define a positional list ADT.
+A position acts as a marker or token within the
+broader positional list.
+A position p is unaffected by changes elsewhere in a
+list; the only way in which a position becomes invalid
+is if an explicit command is issued to delete it.
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+10
+
+Positional List ADT (access)
+❑
+
+Accessor methods:
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+11
+
+Positional List ADT (update)
+❑
+
+Update methods:
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+12
+
+Example
+❑
+
+A sequence of Positional List
+operations:
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+13
+
+Positional List Implementation
+❑
+
+The most natural way
+to implement a
+positional list is with a
+doubly-linked list.
+
+prev
+
+next
+
+element
+
+nodes/positions
+
+header
+
+node
+
+trailer
+
+elements
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+14
+
+Insertion
+❑
+
+Insert a new node, q, between p and its successor.
+
+p
+
+A
+
+B
+
+C
+
+p
+A
+
+q
+
+B
+
+C
+
+X
+
+p
+A
+© 2014 Goodrich, Tamassia, Goldwasser
+
+q
+B
+
+F28DA 2019-20
+
+X
+
+C
+15
+
+Deletion
+❑
+
+Remove a node, p, from a doubly-linked list.
+
+A
+
+B
+
+C
+
+A
+
+B
+
+C
+
+p
+
+D
+
+p
+
+D
+A
+© 2014 Goodrich, Tamassia, Goldwasser
+
+B
+F28DA 2019-20
+
+C
+16
+
+Iterators
+❑
+
+An iterator is a software design pattern
+that abstracts the process of scanning
+through a sequence of elements, one
+element at a time.
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+17
+
+The Iterable Interface
+❑
+
+Java defines a parameterized interface, named
+Iterable, that includes the following single method:
+◼
+
+❑
+
+❑
+
+iterator( ): Returns an iterator of the elements in the
+collection.
+
+An instance of a typical collection class in Java, such
+as an ArrayList, is iterable (but not itself an iterator);
+it produces an iterator for its collection as the return
+value of the iterator( ) method.
+Each call to iterator( ) returns a new iterator
+instance, thereby allowing multiple (even
+simultaneous) traversals of a collection.
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+18
+
+The for-each Loop
+❑
+
+Java’s Iterable class also plays a fundamental
+role in support of the “for-each” loop syntax:
+
+is equivalent to:
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+19
+
+Maps
+❑
+
+❑
+
+❑
+
+❑
+
+A map models a searchable collection of
+key-value entries
+The main operations of a map are for
+searching, inserting, and deleting items
+Multiple entries with the same key are
+not allowed
+Applications:
+◼
+◼
+
+address book
+student-record database
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+20
+
+Entry ADT
+❑
+
+❑
+
+❑
+
+An entry in a priority
+queue is simply a keyvalue pair
+Priority queues store
+entries to allow for
+efficient insertion and
+removal based on keys
+Methods:
+◼
+
+◼
+
+getKey: returns the key
+for this entry
+getValue: returns the
+value associated with this
+entry
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+❑
+
+As a Java interface:
+/**
+* Interface for a key-value
+* pair entry
+**/
+public interface Entry<K,V>
+{
+K getKey();
+V getValue();
+}
+
+F28DA 2019-20
+
+21
+
+The Map ADT
+❑
+
+❑
+
+❑
+
+❑
+❑
+❑
+❑
+
+get(k): if the map M has an entry with key k, return its
+associated value; else, return null
+put(k, v): insert entry (k, v) into the map M; if key k is not
+already in M, then return null; else, return old value
+associated with k
+remove(k): if the map M has an entry with key k, remove
+it from M and return its associated value; else, return null
+size(), isEmpty()
+entrySet(): return an iterable collection of the entries in M
+keySet(): return an iterable collection of the keys in M
+values(): return an iterator of the values in M
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+22
+
+Example
+Operation
+isEmpty()
+put(5,A)
+put(7,B)
+put(2,C)
+put(8,D)
+put(2,E)
+get(7)
+get(4)
+get(2)
+size()
+remove(5)
+remove(2)
+get(2)
+isEmpty()
+
+Output
+true
+null
+null
+null
+null
+
+C
+B
+
+null
+
+E
+4
+
+A
+E
+
+null
+false
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Map
+
+Ø
+(5,A)
+(5,A),(7,B)
+(5,A),(7,B),(2,C)
+(5,A),(7,B),(2,C),(8,D)
+(5,A),(7,B),(2,E),(8,D)
+(5,A),(7,B),(2,E),(8,D)
+(5,A),(7,B),(2,E),(8,D)
+(5,A),(7,B),(2,E),(8,D)
+(5,A),(7,B),(2,E),(8,D)
+(7,B),(2,E),(8,D)
+(7,B),(8,D)
+(7,B),(8,D)
+(7,B),(8,D)
+F28DA 2019-20
+
+23
+
+A Simple List-Based Map
+❑
+
+We can implement a map using an unsorted
+list
+◼
+
+We store the items of the map in a list S (based
+on a doublylinked list), in arbitrary order
+nodes/positions
+
+header
+
+9 c
+
+6 b
+
+5 a
+
+trailer
+
+8 d
+entries
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+24
+
+The get(k) Algorithm
+Algorithm get(k):
+B = S.positions() {B is an iterator of the positions in S}
+while B.hasNext() do
+p = B.next() { the next position in B }
+if p.element().getKey() = k
+then
+return p.element().getValue()
+return null {there is no entry with key equal to k}
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+25
+
+The put(k,v) Algorithm
+Algorithm put(k,v):
+B = S.positions()
+while B.hasNext() do
+p = B.next()
+if p.element().getKey() = k then
+t = p.element().getValue()
+S.set(p,(k,v))
+return t
+{return the old value}
+S.addLast((k,v))
+n=n+1
+{increment variable storing number of entries}
+return null { there was no entry with key equal to k }
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+26
+
+The remove(k) Algorithm
+Algorithm remove(k):
+B =S.positions()
+while B.hasNext() do
+p = B.next()
+if p.element().getKey() = k then
+t = p.element().getValue()
+S.remove(p)
+n=n–1
+{decrement number of entries}
+return t
+{return the removed value}
+return null
+{there is no entry with key equal to k}
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+27
+
+Performance of a List-Based Map
+❑
+
+Performance:
+◼
+
+◼
+
+❑
+
+put takes O(1) time since we can insert the new item at the
+beginning or at the end of the sequence
+get and remove take O(n) time since in the worst case (the
+item is not found) we traverse the entire sequence to look
+for an item with the given key
+
+The unsorted list implementation is effective only for
+maps of small size or for maps in which puts are the
+most common operations, while searches and
+removals are rarely performed (e.g., historical record
+of logins to a workstation)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+28
+
+Summary
+❑
+
+Two lists ADT and implementations
+◼
+
+◼
+
+❑
+
+Maps
+◼
+
+❑
+
+Indexed: Array lists
+Positional: Doubly-linked lists
+Simple list-based map
+
+Next lectures will focus on:
+◼
+◼
+
+Ordered maps implementation (with search trees)
+Unordered maps implementation (with hash tables)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+29
+
+Further reading
+❑
+
+Data Structures and Algorithms in Java, 6th
+edition, by M. T. Goodrich, R. Tamassia, and
+M. H. Goldwasser, Wiley, 2014
+◼
+
+❑
+
+Chapters 7 and 10
+
+Data Structures and Algorithm Analysis, by
+Clifford A. Shaffer, 2013
+◼
+
+Chapter 4
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+30
+
+

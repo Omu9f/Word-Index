@@ -1,0 +1,814 @@
+F28DA 2019-20 Semester 1
+
+Data Structures and Algorithms
+Lecture 7: Text Compression
+Manuel Maarek (Edinburgh)
+Lucine Gharibian (Dubai)
+a
+
+d
+b
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+e
+
+c
+
+1
+
+Outline
+❑
+
+Compression
+◼
+◼
+
+◼
+◼
+◼
+◼
+
+Introduction
+Run-length encoding
+Variable-length (Huffman) encoding
+Substitutional Compression
+LZW Compression
+Loosy compression methods: JPEG, MPEG, MP3, Ogg
+Vorbis, …
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+2
+
+File Compression
+Compression
+
+File
+
+Smaller file
+Expansion
+e.g., zip/unzip; compress/uncompress
+
+Motivation
+❑ Reduce file space needed (e.g., for video clips)
+❑ Often built into disk controllers/Database
+Management Systems
+❑ Reduce time to copy files over network (e.g.,
+WWW)
+DVDs would only hold seconds of video if compression
+methods were NOT used
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+3
+
+Text Compression
+❑
+
+Given a string X, efficiently encode X
+into a smaller string Y
+◼
+
+❑
+
+Saves memory and/or bandwidth
+
+Most methods exploit either:
+◼ Repeated patterns in files
+ e.g., 1010101010101010 (grey colour?)
+
+the dog and the cat (repeated “the ”)
+ Similar successive frames in video.
+◼
+
+Frequency information:
+ e.g., “e” occurs frequently, so better have
+
+short code to store it.
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+4
+
+Run-length Encoding
+❑
+
+Simplest file compression method simply looks
+for “runs” of repeated characters, e.g.,
+◼
+
+❑
+
+and replaces with count + relevant character:
+◼
+
+❑
+
+7a8b4c
+
+For binary files don’t even need to specify the
+character; assume files always start with a zero.
+◼
+◼
+
+❑
+
+aaaaaaabbbbbbbbbcccc
+
+111111110000111111
+coded as 0846
+
+Easy to code; simple loop reads in single
+character and increments counter until different
+character read in
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+5
+
+Compression Ratio
+❑
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+6
+
+Variable Length Encoding
+❑
+
+Based on principle that:
+◼
+◼
+
+◼
+
+◼
+
+◼
+
+Some characters are more common than others
+So use special short codes for them
+Normally 1 byte required for each character (using
+ASCII codes). Variable length encoding finds
+codes for common characters less than 1 byte, but
+codes for rare characters more than 1 byte
+In binary, ASCII code for ’e’ is 01100101. But as
+it’s so common can we just use a single bit? or 2
+bits e.g., 1 or 01
+How can we find an optimal set of codes given
+information on how frequently different characters
+occur
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+7
+
+Variable Length Encoding
+❑
+
+Rather than 8 bits of each char, now chars
+will have variable length, e.g.:
+◼
+
+◼
+
+❑
+
+But how can we tell where one character
+ends and another begins?
+◼
+
+❑
+
+z: 16 bits
+e: 2 bits
+
+1011001000
+
+Is that:
+◼
+
+◼
+
+10 followed by 11001000 1011 followed by
+001000
+or what?
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+8
+
+Variable Length Encoding
+(Huffman encoding)
+❑
+
+❑
+
+❑
+
+❑
+
+Compute frequency f(c) for each
+character c.
+Encode high-frequency characters with
+short code words
+No code word is a prefix for another
+code
+Use an optimal encoding tree to
+determine the code words
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+9
+
+Encoding Tree Example
+❑
+
+❑
+
+❑
+
+A code is a mapping of each character of an alphabet to a binary
+code-word
+A prefix code is a binary code such that no code-word is the
+prefix of another code-word
+An encoding tree represents a prefix code
+◼
+◼
+
+Each external node stores a character
+The code word of a character is given by the path from the root to
+the external node storing the character (0 for a left child and 1 for a
+right child)
+
+00
+
+010
+
+011
+
+10
+
+11
+
+a
+
+b
+
+c
+
+d
+
+e
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+a
+
+d
+b
+
+c
+
+e
+10
+
+Encoding Tree Optimization
+❑
+
+Given a text string X, we want to find a prefix code for the characters
+of X that yields a small encoding for X
+Frequent characters should have long code-words
+Rare characters should have short code-words
+
+◼
+◼
+
+❑
+
+Example
+X = abracadabra
+T1 encodes X into 29 bits
+T2 encodes X into 24 bits
+
+◼
+◼
+◼
+
+T1
+
+T2
+
+c
+
+d
+a
+
+b
+
+r
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+a
+
+b
+c
+
+F28DA 2019-20
+
+r
+
+d
+11
+
+Huffman’s Algorithm
+❑
+
+❑
+
+❑
+
+Given a string X,
+Huffman’s algorithm
+construct a prefix
+code the minimizes
+the size of the
+encoding of X
+It runs in time
+O(n + d log d), where
+n is the size of X
+and d is the number
+of distinct characters
+of X
+A heap-based
+priority queue is
+used as an auxiliary
+structure
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Algorithm HuffmanEncoding(X)
+Input string X of size n
+Output optimal encoding trie for X
+C  distinctCharacters(X)
+computeFrequencies(C, X)
+Q  new empty heap
+for all c  C
+T  new single-node tree storing c
+Q.insert(getFrequency(c), T)
+while Q.size() > 1
+f1  Q.minKey()
+T1  Q.removeMin()
+f2  Q.minKey()
+T2  Q.removeMin()
+T  join(T1, T2)
+Q.insert(f1 + f2, T)
+return Q.removeMin()
+F28DA 2019-20
+
+12
+
+Example
+
+11
+
+a
+5
+
+2
+
+a
+
+b
+
+c
+
+d
+
+r
+
+5
+
+2
+
+1
+
+1
+
+2
+
+c
+1
+
+d
+1
+
+b
+2
+
+6
+
+a
+
+X = abracadabra
+Frequencies
+
+c
+
+b
+2
+
+c
+
+d
+
+b
+
+2
+
+r
+2
+
+a
+5
+
+c
+
+2
+d
+
+r
+2
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+r
+6
+
+2
+a
+5
+
+4
+
+a
+5
+
+c
+
+F28DA 2019-20
+
+4
+
+d
+
+b
+
+r
+
+4
+d
+
+b
+
+r
+13
+
+Extended Huffman Tree Example
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+14
+
+Hoffman Encoding Example
+Rare characters ‘a’ and ‘b’ get longer codes than common
+characters.
+❑ Result of all this is coding scheme where common characters
+have short codes.
+❑ Good for text files (20-30% reduction)
+
+41
+
+23
+
+18
+
+11
+
+a
+5
+
+b
+6
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+e
+12
+
+c
+8
+
+F28DA 2019-20
+
+d
+10
+15
+
+Substitutional Compression
+❑
+
+Finds repeated sequences, not just runs
+◼
+
+❑
+
+Replaces later sequences with a
+reference to earlier one. Either:
+◼
+
+◼
+
+❑
+
+e.g., the cat and the dog
+
+Stores character sequences in a dictionary
+Replaces sequence with a dictionary index
+Keeps track of (say) last N bytes in string,
+and replaces repeated sequence with
+reference back to last occurrence
+
+Method used widely for text files
+gzip, zip etc use it
+◼
+
+May get 50% compression
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+16
+
+LZW Compression
+❑
+
+❑
+
+❑
+
+Lempel, Ziv and Welch suggested a clever
+method to decide what to put in dictionary,
+avoiding storing every possible sequence:
+Initial dictionary contains all individual
+characters, e.g. ASCII, UNICODE, or
+e.g. 0 1 2 3
+betw
+Go through the text file (say, d[]), character by
+character:
+◼
+
+◼
+◼
+
+at each character find the longest prefix of d that is
+already in the dictionary
+output the code for the prefix
+Add the prefix plus the next character to the
+dictionary
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+17
+
+LZW Example
+❑
+
+d = ‘‘wewetweb’’
+initial dictionary
+
+0123
+
+betw
+❑
+
+❑
+
+❑
+
+Code produced:
+
+Result is that long common strings are added;
+long rare ones are not
+Question: Do we need to send the dictionary
+along with the encoded file?
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+18
+
+LZW decoding
+❑
+
+❑
+
+❑
+
+❑
+
+During encoding, new added codes depend on
+the data
+Decoding is done in a similar way: the table is
+built with uncompressed data
+Encoder and decoder agree on the size of the
+alphabet and the maximum code width
+LZW decompression starts with an initial dictionary:
+while there are still dictionary codes to decompress do
+◼
+◼
+
+◼
+◼
+
+let s1 = string corresponding to the next code ;
+let s2 = string corresponding to the following code or s1 if
+there is no following code ;
+output s1 ;
+add s1 plus the 1st character of s2 to the dictionary
+
+end
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+19
+
+Lossy Compression
+❑
+
+❑
+
+All methods so far are lossless - can
+restore exact copy of original
+For images/video lossy methods are OK,
+where some fine detail lost:
+◼
+
+◼
+
+❑
+
+JPEG: Lossy compression for images
+MPEG: Video compression
+
+Lossy compression obviously useless for
+text
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+20
+
+JPEG
+JPEG is an ISO standard named after the Joint Photographic
+Experts Group. There are several standards, e.g. baseline
+JPEG and lossless JPEG. Lots more info available on WWW.
+Roughly:
+❑ Transform image to obtain spatial frequencies (similar to
+fourier transform).
+❑ High spatial frequencies = fine detail. So throw them
+away.
+❑ Now if restore image by doing reverse transform, fine
+detail lost.. but may be invisible to human eye.
+❑ Can vary degree of lossiness depending on
+quality/compression criteria.
+❑ Can reduce size by factor of 5 without perceptible loss in
+quality.
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+21
+
+MPEG: Video Compression
+MPEG produced by an ISO working party: the
+Moving Picture Expert Group. Several standards:
+❑ MPEG-1: poor video quality
+❑ MPEG-2: higher quality DVDROM/TV quality
+❑ No MPEG-3!
+❑ MPEG-4: interactivity, mobile devices
+❑ watch this space!
+Roughly:
+❑ Uses JPEG compression for frame.
+❑ Looks at differences between frames, rather
+than recording every one (successive frames
+will be very similar).
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+22
+
+Audio Compression
+The widely-used MP3 audio standard is the audio
+layer (Layer III) of MPEG-1.
+It uses both
+❑ lossy techniques, e.g. minimal audition
+threshold, masking effect
+❑ lossless techniques, e.g. Huffman encoding
+New formats will appear, e.g. audio-only
+MPEG-4 (.m4a) is an emerging standard
+Lots more info on web, e.g. in wikipedia, or
+http://www.mp3-tech.org/
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+23
+
+Summary
+❑
+
+❑
+❑
+❑
+❑
+
+Run-length
+Variable length
+Substitutional
+Lossy (image/video)
+Use information on:
+◼
+◼
+
+❑
+
+Repetition (e.g., run-length, substitutional, MPEG)
+Frequency (Variable length)
+
+Methods are often combined, as in most production
+compression software
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+24
+
+Further reading
+❑
+
+Data Structures and Algorithms in Java, 6th
+edition, by M. T. Goodrich, R. Tamassia, and
+M. H. Goldwasser, Wiley, 2014
+◼
+
+❑
+
+Chapter 12
+
+Data Structures and Algorithm Analysis, by
+Clifford A. Shaffer, 2013
+◼
+
+Chapter 5
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+25
+
+

@@ -1,0 +1,101 @@
+Description
+
+Life restoration of Sarcosuchus imperator
+Sarcosuchus was a giant relative of crocodiles, with 
+fully grown individuals estimated to have reached up 
+to 9 to 9.5 m (29.5 to 31.2 ft) in total length and 3.5 
+to 4.3 metric tons (3.9 to 4.7 short tons) in weight.[1] 
+It had somewhat telescoped eyes and a long snout 
+comprising 75% of the length of the skull. There were 
+35 teeth in each side of the upper jaw, while in the 
+lower jaw there were 31 teeth in each side. The upper 
+jaw was also noticeably longer than the lower one 
+leaving a gap between them when the jaws were shut, 
+creating an overbite. In young individuals the shape 
+of the snout resembled that of the living gharial but 
+in fully grown individuals it 
+became considerably broader.[2][3]
+
+Bulla
+Sarcosuchus has an expansion at the end of its 
+snout known as a bulla, which has been compared 
+with the ghara seen in gharials. However, unlike 
+the ghara, which is only found in male gharial, 
+the bulla is present in all Sarcosuchus skulls that 
+have been found so far, suggesting that it was 
+not a sexually dimorphic trait. The purpose of 
+this structure is not known.
+
+Osteoderms
+
+Scutes of S. imperator
+The osteoderms, also known as dermal scutes, of 
+Sarcosuchus were similar to those goniopholodids 
+like Sunosuchus and Goniopholis; they formed an 
+uninterrupted surface that started in the posterior 
+part of the neck up to the middle of the tail 
+like is seen in Araripesuchus and other basal 
+crocodyliforms, different from the pattern seen 
+in living crocodiles, which present discontinuity 
+between the osteoderms of the neck and body.[2]
+
+Size
+
+Size of S. imperator (blue) compared with 
+other crocodyliforms
+A common method to estimate the size of 
+crocodiles and crocodile-like reptiles is 
+the use of the length of the skull measured 
+in the midline from the tip of the snout to 
+the back of the skull table,[2] since in living 
+crocodilians there is a strong correlation between 
+skull length and total body length in subadult and 
+adult individuals irrespective of their sex,[4] 
+this method was used by Sereno et al. (2001) for 
+Sarcosuchus due to the absence of a complete enough 
+skeleton. Two regression equations were used to 
+estimate the size of S. imperator, they were created 
+based on measurements gathered from 17 captive gharial 
+individuals from northern India and from 28 wild 
+saltwater crocodile individuals from northern Australia,[2] 
+both datasets supplemented by available measurements of 
+individuals over 1.5 m (4.92 ft) in length found in the 
+literature.[2][5] The largest known skull of S. imperator 
+(the type specimen) is 1.6 m (5.25 ft) long (1.5 m (4.92 ft) 
+in the midline), and it was estimated that the individual 
+it belonged to had a total body length of 11.65 m (38.2 ft),
+[2] its snout-vent length of 5.7 m (18.7 ft) was estimated 
+using linear equations for the saltwater crocodile[6] and 
+in turn this measurement was used to estimate its body 
+weight at 8 metric tons (8.8 short tons).[2] This shows that 
+Sarcosuchus was able to reach a maximum body size not only 
+greater than previously estimated[2] but also greater than 
+that of the Miocene Rhamphosuchus,[7] the Late Cretaceous 
+Deinosuchus[8][9] and the Miocene Purussaurus[10] according 
+to current estimates at that time.
+
+However, extrapolation from the femur of a subadult 
+individual as well as measurements of the skull width 
+further showed that the largest S. imperator was significantly 
+smaller than was estimated by Sereno et al. (2001) based on 
+modern crocodilians. O’Brien et al. (2019) estimated the length 
+of the largest S. imperator specimen at 9.5 m (31 ft) and body 
+weight at 4.3 metric tons (4.7 short tons) based on longirostrine 
+crocodylians skull width to total length ratio. This estimate is 
+very close to the femur based estimate (9.1 m (29.9 ft)).[1]
+
+Classification
+
+Reconstructed S. imperator skeleton from behind at the Indianapolis Children's Museum
+Sarcosuchus is commonly classified as part of the clade Pholidosauridae,[2][11][12] 
+a group of crocodile-like reptiles (Crocodyliformes) related but outside Crocodylia 
+(the clade containing living crocodiles, alligators and gharials).[2] Within this group 
+it is most closely related to the North American genus Terminonaris.[2] Most members of 
+Pholidosauridae had long, slender snouts and they all were aquatic, inhabiting several 
+different environments, some forms are interpreted as marine, capable of tolerating 
+saltwater while others, like Sarcosuchus, were freshwater forms, the most primitive 
+members of the clade, however, were found in coastal settings, zones of mixing of 
+freshwater and marine waters.[12] Sarcosuchus stands out among pholidosaurids for 
+being considered a generalist predator, different from most known members of the clade 
+which were specialized piscivores.[2] A 2019 study found it to be in a more derived position 
+in Tethysuchia, being phylogenetically closer to Dyrosauridae.[13]

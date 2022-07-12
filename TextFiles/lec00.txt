@@ -1,0 +1,499 @@
+F28DA 2019-20 Semester 1
+
+Data Structures and Algorithms
+Course Overview
+Manuel Maarek (Edinburgh)
+Lucine Gharibian (Dubai)
+
+F28DA 2019-20
+
+1
+
+What is this course about?
+❑
+
+We will study moderately complex data structures
+and algorithms that are essential in core areas of
+computer science
+◼
+◼
+◼
+
+◼
+◼
+
+❑
+
+Compilers
+Operating Systems
+Database Systems
+Search Engines
+etc.
+
+This is one of the most important (and fun) courses
+you will take
+◼
+
+Prerequisite for almost all other upper year courses
+F28DA 2019-20
+
+2
+
+Simple data structures you have seen
+Data structure = representation and
+operations associated with a data type
+
+Set/bag
+
+Array
+F28DA 2019-20
+
+Tree
+
+3
+
+Simple algorithms you have seen
+Binary search
+❑ Bubble sort
+❑ Quick sort
+❑
+
+F28DA 2019-20
+
+4
+
+Knowledge Assumed
+❑
+
+We assume you know basic data structures
+ Arrays, bags, lists, stacks, queues, linked lists
+◼
+
+◼
+
+◼
+
+Functions, logarithms, exponents, sets, series,
+derivatives, limits
+Abstract Data types
+Basic object oriented design concepts
+ abstraction, encapsulation, modularity
+
+F28DA 2019-20
+
+5
+
+Skills Assumed
+❑
+
+We assume you know how to program in
+Java
+◼
+
+◼
+◼
+
+❑
+
+can design, implement, test, debug, and document simple Java
+programs
+can read and understand moderate size Java programs
+can write and understand simple recursive code
+
+This is not a course on Java. If you don’t know Java, start
+learning it now, before the programming assignments are
+due!
+◼
+◼
+
+◼
+
+Books, tutorials on the web, etc.
+Chapters 1 and 2 of our textbook (Goodrich, Tamassia &
+Goldwasser) gives a good introduction to Java
+LinkedIn Learning (free with HW account)
+https://www.linkedin.com/learning/
+F28DA 2019-20
+
+6
+
+What will you learn?
+❑
+
+Analysis of moderately complex algorithms
+◼
+
+How to predict algorithm’s performance
+ time and space complexity
+
+◼
+
+Algorithm correctness
+
+Moderately complex data structures that let
+us efficiently store, access, manage data
+❑ How to solve practical problems efficiently
+by choosing the appropriate data structures
+and algorithms
+❑
+
+F28DA 2019-20
+
+7
+
+Topics Covered
+❑
+
+Analysis of algorithms
+◼
+◼
+
+❑
+
+Data Structures
+◼
+◼
+◼
+
+◼
+
+❑
+
+Time and space complexity
+Correctness
+Maps (dictionaries), hash tables
+Priority queues and heaps
+Trees, binary search trees
+Graphs
+
+Algorithms
+◼
+
+◼
+
+Binary Search, sorting, algorithms on trees and graphs
+Compression
+F28DA 2019-20
+
+8
+
+Contact Info
+❑
+
+Edinburgh Lecturer: Manuel Maarek @mm894
+ Office hours/email: see Contacts page on Vision
+◼
+◼
+
+Two lectures per week
+One lab sessions per week split into three groups
+ Remember to get a MACS Linux login
+ Note that the GRID Digital Lab runs Windows but has a
+VirtualBox with MACS Linux
+
+◼
+
+One tutorial session per week
+ To work together on the week's lab exercises and on past exam
+questions
+
+❑
+
+Dubai Lecturer: Lucine Gharibian @lg64
+
+F28DA 2019-20
+
+9
+
+Contact Info
+❑
+❑
+
+Course Web Page on Vision
+Lecture Notes and lab sheets
+◼
+
+❑
+❑
+
+❑
+
+Will be available on Vision a week ahead of time
+
+Check the course Vision page frequently
+I will post any important announcements on
+Vision (about coursework, exams, etc.)
+We will be using the Students GitLab
+https://gitlab-student.macs.hw.ac.uk
+
+❑
+
+Videos of most Edinburgh sessions will be
+available on Vision
+F28DA 2019-20
+
+10
+
+Textbook
+❑
+
+❑
+
+Main:
+th edition, by
+◼ Data Structures and Algorithms in Java, 6
+M. T. Goodrich, R. Tamassia, and M. H. Goldwasser,
+Wiley, 2014
+◼ Data Structures and Algorithm Analysis, by Clifford A.
+Shaffer, 2013 http://people.cs.vt.edu/~shaffer/Book/
+◼ Algorithms, 4th Edition, Robert Sedgewick, and Kevin
+Wayne, Addison-Wesley Professional, 2011
+Supplementary:
+◼
+
+◼
+◼
+
+Data Structures and Algorithms with Object Oriented Design Patterns in
+Java, Bruno R. Preiss, Wiley.
+The Java Programming Language, Arnold and Gosling, Addison-Wesley.
+Java, an Object Oriented Approach, Arnow and Weiss, Addison-Wesley.
+F28DA 2019-20
+
+11
+
+Class Attendance
+❑
+
+Attendance is strongly encouraged
+◼
+
+◼
+
+◼
+
+Lecture notes is only be a summary of things
+happening in class, will not contain many
+examples
+Students who attend lectures tend to do better
+Attending lectures is most efficient way to
+learn the required material
+
+F28DA 2019-20
+
+12
+
+Late Policy
+❑
+
+❑
+
+❑
+
+❑
+❑
+
+The course applies the new submission of
+coursework policy
+No individual extension for coursework
+submissions
+Deduction of 30% from the mark awarded for
+up to 5 days late submission
+Submission > 5 days late will not get a mark
+If you have mitigating circumstances for an
+extension, talk to your Personal Tutor and submit
+an MC form with supporting documentation to
+the School’s Office
+F28DA 2019-20
+
+13
+
+Ethical Conduct
+❑
+❑
+
+All assignments are to be done individually
+Assignments judged to be the result of academic
+dishonesty will,
+◼
+◼
+
+❑
+
+First offence = -assignment weight
+Second offence = failing mark
+
+We have sophisticated software which will
+examine your code against everyone else in class
+
+F28DA 2019-20
+
+14
+
+Email Contact
+❑
+
+❑
+
+Use you University email address or CC your
+University email address when you contact the
+lecturers or lab helpers or any other member of
+staff. The tutors will respond to your university
+address.
+Use the Students GitLab if you have a question
+related to Java programming
+◼
+
+Post a comment to your lecturer, click to the left of a line of code
+and write a comment starting with “@lecturer’s username” for
+your campus course leader. This comment will be posted on your
+commit but will be sent to your lecturer’s GitLab account and they
+will receive a notification of it.
+F28DA 2019-20
+
+15
+
+Feedback
+❑
+
+❑
+
+You will receive general and individual
+feedback in lecture, tutorial and lab sessions, on
+your exercises, pieces coursework and exams
+Don’t hesitate to contact the lectures for
+questions, you tell us how we could improve this
+course via Start-Stop-Continue forms (midsemester) and SEEQ forms (end of semester)
+
+F28DA 2019-20
+
+16
+
+Semester Plan
+Week Lecture topic
+L0 Overview
+1
+L1 Revision of Basic ADTs
+2
+L2 Algorithm Analysis
+L3 Sorting Algorithms
+3
+L4 Maps
+4
+
+L5 Hash tables
+
+5
+
+L6 Search trees
+L7 Compression
+L8 Cryptography
+
+6
+
+Lab and tutorial
+no lab session
+Lab 1 Warm up
+Lab 2 Big Oh
+
+no tutorial
+
+Help on CW1
+
+9
+
+L9 Graphs
+L10 Graph Searches
+L11 Digraphs
+
+10
+
+L12 Shortest Path
+
+Lab 6 Compression
+Lab 7 Cryptography
+Lab 8 Graphs
+Lab 9 Graph searching
+Help on CW2
+
+8
+
+11
+12
+
+L13 Security
+L14 Critical path &Task network
+L15 Algorithm Design
+Revision week
+
+CW1 issued
+
+Lab 3 Sorting
+Lab 4 Maps
+Lab 5 Hashing
+Help on CW1
+
+Reading week
+
+7
+
+Coursework
+
+Lab 10 Algorithm design
+Help on CW2
+
+CW1 submission
+
+CW2 issued
+
+CW1 feedback
+CW2 submission
+
+no lab session
+
+Exam week 1
+Exam week 2
+
+CW2 feedback
+F28DA 2019-20
+
+17
+
+Assessments
+❑
+
+Exam 60% (2h)
+◼
+
+◼
+
+◼
+
+❑
+
+Coursework 40%
+◼
+◼
+
+❑
+
+Past exams are available online (see link on Vision) for
+revision and training
+Solutions of past exams are not provided, solutions of
+lab exercises are available after the lab/tutorial sessions
+Revision sessions towards the end of the semester
+Coursework 1 on hash maps
+Coursework 2 on graphs
+
+Note that lab exercises are not marked
+F28DA 2019-20
+
+18
+
+Questions?
+
+F28DA 2019-20
+
+19
+
+

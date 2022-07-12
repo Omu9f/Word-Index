@@ -1,0 +1,1341 @@
+F28DA 2019-20 Semester 1
+
+Data Structures and Algorithms
+Lecture 10: Graph Searches
+Manuel Maarek (Edinburgh)
+Lucine Gharibian (Dubai)
+A
+
+L0
+L1
+
+B
+
+L2
+
+B
+
+A
+C
+
+E
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+D
+
+D
+
+E
+
+C
+
+F
+F28DA 2019-20
+
+1
+
+Outline
+❑
+❑
+
+More graph terminology
+Graph searches and traversals
+◼
+◼
+
+Depth-First Search (DFS)
+Breadth-First Search (BFS)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+2
+
+Subgraphs
+❑
+
+A subgraph S of a graph
+G is a graph such that
+◼
+
+◼
+
+❑
+
+The vertices of S are a
+subset of the vertices of G
+The edges of S are a
+subset of the edges of G
+
+Subgraph
+
+A spanning subgraph
+of G is a subgraph that
+contains all the vertices
+of G
+Spanning subgraph
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+3
+
+Connectivity
+❑
+
+❑
+
+A graph is
+connected if there
+is a path between
+every pair of
+vertices
+A connected
+component of a
+graph G is a
+maximal connected
+subgraph of G
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Connected graph
+
+Non connected graph with two
+connected components
+
+F28DA 2019-20
+
+4
+
+Connected Component (Terminology)
+❑
+
+A connected component G’ of a graph G is a maximal connected
+subgraph of G
+◼ Connected: There is a path between any 2 vertices in the connected
+component G’
+◼ Maximal: there is no way to add into G’ any vertices and/or edges of
+G which are not currently in G’ in such a way that the resulting
+subgraph is connected
+b
+
+b
+d
+
+a
+c
+
+e
+
+Graph G
+© 2014 Goodrich, Tamassia, Goldwasser
+
+b
+
+d
+
+a
+
+d
+
+a
+c
+
+e
+
+G’ (in thick blue
+lines) is a connected
+component of G
+F28DA 2019-20
+
+c
+
+e
+
+added a new vertex
+d, G’ not connected
+anymore
+5
+
+Connected Component
+b
+
+b
+
+d
+
+a
+
+d
+
+a
+c
+
+e
+
+G’ not a connected
+component of G as
+not maximal
+
+d
+
+a
+c
+
+e
+
+added a new vertex
+and edge, and still
+not maximal
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+b
+
+F28DA 2019-20
+
+c
+
+e
+
+added a new edge,
+and now connected
+component
+
+6
+
+Connected Components
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+7
+
+Trees and Forests
+❑
+
+A (free) tree is an
+undirected graph T such
+that
+T is connected
+◼ T has no cycles
+This definition of tree is
+different from the one of a
+rooted tree
+◼
+
+❑
+
+❑
+
+A forest is an undirected
+graph without cycles
+The connected
+components of a forest
+are trees
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+Tree
+
+Forest
+8
+
+Spanning Trees and Forests
+❑
+
+❑
+
+❑
+
+❑
+
+A spanning tree of a
+connected graph is a
+spanning subgraph that is
+a tree
+A spanning tree is not
+unique unless the graph is
+a tree
+Spanning trees have
+applications to the design
+of communication
+networks
+A spanning forest of a
+graph is a spanning
+subgraph that is a forest
+
+Graph
+
+Spanning tree
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+9
+
+v
+
+Traversing a Graph
+
+u
+
+(u,v)
+
+w
+
+(v,w)
+
+z
+
+(u,w)
+
+(w,z)
+
+The most basic operation on a graph is traversing
+❑
+How do we traverse the graph so that we visit each vertex exactly
+once and also learn something useful about the graph?
+◼
+Could go through the vertex/edge sequences, but won’t learn
+anything useful, we will just randomly visit vertices/edges
+❑
+To learn anything useful, need to traverse in some “natural” order
+for the specific graph
+❑
+“Algorithm”: Start at a vertex, and visit adjacent vertices
+❑
+However, we have a choice to make when visiting adjacent
+vertices
+1. Go for breadth
+3: go for breadth
+❑
+
+u
+
+Explore all edges from the current
+vertex before going to the next vertex
+
+2.
+
+Go for depth
+Move to the next vertex from the
+current vertex before finishing
+exploring current vertex (go deep in
+the graph)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+v
+
+F28DA 2019-20
+
+w
+
+z
+
+2
+
+3
+go for depth
+10
+
+Depth-First Search
+A
+B
+
+D
+
+E
+
+C
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+11
+
+Depth-First Search
+❑
+
+❑
+
+Depth-first search (DFS)
+is a general technique
+for traversing a graph
+A DFS traversal of a
+graph G
+◼
+
+◼
+
+◼
+
+◼
+
+Visits all the vertices and
+edges of G
+Determines whether G is
+connected
+Computes the connected
+components of G
+Computes a spanning
+forest of G
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+❑
+
+❑
+
+DFS on a graph with n
+vertices and m edges
+takes O(n + m ) time
+DFS can be further
+extended to solve other
+graph problems
+◼
+
+◼
+
+❑
+
+F28DA 2019-20
+
+Find and report a path
+between two given
+vertices
+Find a cycle in the graph
+
+Depth-first search is to
+graphs what Euler tour
+is to binary trees
+12
+
+DFS Algorithm from a Vertex
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+13
+
+Java Implementation
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+14
+
+Example
+unexplored vertex
+visited vertex
+unexplored edge
+discovery edge
+back edge
+
+A
+A
+
+A
+
+B
+
+E
+
+D
+
+E
+
+C
+
+A
+B
+
+D
+
+A
+D
+
+E
+
+C
+© 2014 Goodrich, Tamassia, Goldwasser
+
+B
+C
+
+F28DA 2019-20
+
+15
+
+Example (cont.)
+A
+B
+
+A
+D
+
+E
+
+B
+
+C
+
+C
+
+A
+
+A
+
+B
+
+D
+
+E
+
+B
+
+C
+© 2014 Goodrich, Tamassia, Goldwasser
+
+D
+
+E
+
+D
+
+E
+
+C
+F28DA 2019-20
+
+16
+
+DFS and Maze Traversal
+❑
+
+The DFS algorithm is
+similar to a classic
+strategy for exploring
+a maze
+◼
+
+◼
+
+◼
+
+We mark each
+intersection, corner
+and dead end (vertex)
+visited
+We mark each corridor
+(edge ) traversed
+We keep track of the
+path back to the
+entrance (start vertex)
+by means of a rope
+(recursion stack)
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+17
+
+Properties of DFS
+Property 1
+DFS(G, v) visits all the
+vertices and edges in
+the connected
+component of v
+
+Property 2
+The discovery edges
+labeled by DFS(G, v)
+form a spanning tree of
+the connected
+component of v
+© 2014 Goodrich, Tamassia, Goldwasser
+
+A
+
+B
+
+F28DA 2019-20
+
+D
+
+E
+
+C
+
+18
+
+Analysis of DFS
+❑
+
+❑
+
+Setting/getting a vertex/edge label takes O(1) time
+Each vertex is labeled twice
+◼
+◼
+
+❑
+
+Each edge is labeled twice
+◼
+◼
+
+❑
+❑
+
+once as UNEXPLORED
+once as VISITED
+
+once as UNEXPLORED
+once as DISCOVERY or BACK
+
+Method incidentEdges is called once for each vertex
+DFS runs in O(n + m) time provided the graph is
+represented by the adjacency list structure
+◼
+
+Recall that
+
+Sv deg(v) = 2m
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+19
+
+Path Finding
+❑
+
+❑
+
+❑
+
+❑
+
+We can specialize the DFS
+algorithm to find a path
+between two given
+vertices u and z using the
+template method pattern
+We call DFS(G, u) with u
+as the start vertex
+We use a stack S to keep
+track of the path between
+the start vertex and the
+current vertex
+As soon as destination
+vertex z is encountered,
+we return the path as the
+contents of the stack
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Algorithm pathDFS(G, v, z)
+setLabel(v, VISITED)
+S.push(v)
+if v = z
+return S.elements()
+for all e  G.incidentEdges(v)
+if getLabel(e) = UNEXPLORED
+w  opposite(v,e)
+if getLabel(w) = UNEXPLORED
+setLabel(e, DISCOVERY)
+S.push(e)
+pathDFS(G, w, z)
+S.pop(e)
+else
+setLabel(e, BACK)
+S.pop(v)
+
+F28DA 2019-20
+
+20
+
+Path Finding in Java
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+21
+
+Cycle Finding
+❑
+
+❑
+
+❑
+
+We can specialize the
+DFS algorithm to find a
+simple cycle using the
+template method pattern
+We use a stack S to
+keep track of the path
+between the start vertex
+and the current vertex
+As soon as a back edge
+(v, w) is encountered,
+we return the cycle as
+the portion of the stack
+from the top to vertex w
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Algorithm cycleDFS(G, v, z)
+setLabel(v, VISITED)
+S.push(v)
+for all e  G.incidentEdges(v)
+if getLabel(e) = UNEXPLORED
+w  opposite(v,e)
+S.push(e)
+if getLabel(w) = UNEXPLORED
+setLabel(e, DISCOVERY)
+pathDFS(G, w, z)
+S.pop(e)
+else
+T  new empty stack
+repeat
+o  S.pop()
+T.push(o)
+until o = w
+return T.elements()
+S.pop(v)
+
+F28DA 2019-20
+
+22
+
+DFS for an Entire Graph
+❑
+
+The algorithm uses a mechanism
+for setting and getting “labels”
+of vertices and edges
+
+Algorithm DFS(G)
+Input graph G
+Output labeling of the edges of G
+as discovery edges and
+back edges
+for all u  G.vertices()
+setLabel(u, UNEXPLORED)
+for all e  G.edges()
+setLabel(e, UNEXPLORED)
+for all v  G.vertices()
+if getLabel(v) = UNEXPLORED
+DFS(G, v)
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Algorithm DFS(G, v)
+Input graph G and a start vertex v of G
+Output labeling of the edges of G
+in the connected component of v
+as discovery edges and back edges
+setLabel(v, VISITED)
+for all e  G.incidentEdges(v)
+if getLabel(e) = UNEXPLORED
+w  opposite(v,e)
+if getLabel(w) = UNEXPLORED
+setLabel(e, DISCOVERY)
+DFS(G, w)
+else
+setLabel(e, BACK)
+
+F28DA 2019-20
+
+23
+
+All Connected Components
+❑
+
+Loop over all vertices, doing a DFS from
+each unvisted one.
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+24
+
+Breadth-First Search
+L0
+L1
+
+B
+
+L2
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+A
+
+F28DA 2019-20
+
+C
+E
+
+D
+F
+
+25
+
+Breadth-First Search
+❑
+
+❑
+
+Breadth-first search
+(BFS) is a general
+technique for traversing
+a graph
+A BFS traversal of a
+graph G
+◼
+
+◼
+
+◼
+
+◼
+
+❑
+
+❑
+
+Visits all the vertices and
+edges of G
+Determines whether G is
+connected
+Computes the connected
+components of G
+Computes a spanning
+forest of G
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+BFS on a graph with n
+vertices and m edges
+takes O(n + m ) time
+BFS can be further
+extended to solve other
+graph problems
+◼
+
+◼
+
+Find and report a path
+with the minimum
+number of edges
+between two given
+vertices
+Find a simple cycle, if
+there is one
+26
+
+BFS Algorithm
+❑
+
+The algorithm uses a
+mechanism for setting and
+getting “labels” of vertices
+and edges
+
+Algorithm BFS(G)
+Input graph G
+Output labeling of the edges
+and partition of the
+vertices of G
+for all u  G.vertices()
+setLabel(u, UNEXPLORED)
+for all e  G.edges()
+setLabel(e, UNEXPLORED)
+for all v  G.vertices()
+if getLabel(v) = UNEXPLORED
+BFS(G, v)
+© 2014 Goodrich, Tamassia, Goldwasser
+
+Algorithm BFS(G, s)
+L0  new empty sequence
+L0.addLast(s)
+setLabel(s, VISITED)
+i0
+while Li.isEmpty()
+Li +1  new empty sequence
+for all v  Li.elements()
+for all e  G.incidentEdges(v)
+if getLabel(e) = UNEXPLORED
+w  opposite(v,e)
+if getLabel(w) = UNEXPLORED
+setLabel(e, DISCOVERY)
+setLabel(w, VISITED)
+Li +1.addLast(w)
+else
+setLabel(e, CROSS)
+i  i +1
+
+F28DA 2019-20
+
+27
+
+Java Implementation
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+28
+
+Example
+L0
+
+unexplored vertex
+visited vertex
+unexplored edge
+discovery edge
+cross edge
+
+A
+A
+
+L0
+L1
+
+L1
+
+L0
+
+C
+E
+
+B
+
+D
+F
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+C
+
+E
+
+A
+
+B
+
+A
+
+L1
+
+F
+
+A
+
+B
+
+C
+E
+
+F28DA 2019-20
+
+D
+
+D
+F
+29
+
+Example (cont.)
+L0
+L1
+
+L0
+
+A
+
+B
+
+C
+E
+
+L0
+L1
+
+F
+
+L0
+
+C
+E
+
+B
+
+L2
+
+A
+
+B
+
+L2
+
+D
+
+L1
+
+D
+
+F28DA 2019-20
+
+C
+E
+
+D
+F
+
+A
+
+B
+
+L2
+
+F
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+L1
+
+A
+
+C
+E
+
+D
+F
+30
+
+Example (cont.)
+L0
+L1
+
+L0
+L1
+
+A
+
+B
+
+L2
+
+C
+E
+
+D
+
+L1
+
+B
+
+L2
+
+F
+
+A
+C
+E
+
+D
+F
+
+A
+
+B
+
+L2
+
+L0
+
+C
+E
+
+D
+F
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+31
+
+Properties
+Notation
+
+A
+
+Gs: connected component of s
+
+Property 1
+
+BFS(G, s) visits all the vertices and
+edges of Gs
+
+B
+E
+
+Property 2
+
+The discovery edges labeled by
+BFS(G, s) form a spanning tree Ts
+of Gs
+
+Property 3
+
+For each vertex v in Li
+◼
+
+◼
+
+L0
+L1
+
+The path of Ts from s to v has i
+edges
+Every path from s to v in Gs has at
+least i edges
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+C
+F
+
+A
+
+B
+
+L2
+
+D
+
+C
+E
+
+D
+F
+32
+
+Analysis
+❑
+
+❑
+
+Setting/getting a vertex/edge label takes O(1) time
+Each vertex is labeled twice
+◼
+◼
+
+❑
+
+Each edge is labeled twice
+◼
+◼
+
+❑
+❑
+
+❑
+
+once as UNEXPLORED
+once as VISITED
+
+once as UNEXPLORED
+once as DISCOVERY or CROSS
+
+Each vertex is inserted once into a sequence Li
+Method incidentEdges is called once for each vertex
+BFS runs in O(n + m) time provided the graph is
+represented by the adjacency list structure
+◼
+
+Recall that
+
+Sv deg(v) = 2m
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+33
+
+Applications
+❑
+
+Using the template method pattern, we can
+specialize the BFS traversal of a graph G to
+solve the following problems in O(n + m) time
+◼
+
+◼
+◼
+
+◼
+
+Compute the connected components of G
+Compute a spanning forest of G
+Find a simple cycle in G, or report that G is a
+forest
+Given two vertices of G, find a path in G between
+them with the minimum number of edges, or
+report that no such path exists
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+34
+
+Summary DFS vs. BFS
+Applications
+
+DFS
+
+BFS
+
+
+
+
+
+Spanning forest, connected
+components, paths, cycles
+Shortest paths
+
+
+
+Biconnected components
+
+
+
+L0
+
+A
+B
+
+C
+E
+
+D
+
+L1
+
+DFS
+© 2014 Goodrich, Tamassia, Goldwasser
+
+B
+
+L2
+
+F
+
+A
+C
+E
+
+D
+F
+
+BFS
+F28DA 2019-20
+
+35
+
+Summary DFS vs. BFS (cont.)
+Back edge (v,w)
+◼
+
+Cross edge (v,w)
+
+w is an ancestor of v in
+the tree of discovery
+edges
+
+◼
+
+L0
+
+A
+B
+
+w is in the same level as
+v or in the next level
+
+C
+E
+
+D
+
+L1
+
+DFS
+© 2014 Goodrich, Tamassia, Goldwasser
+
+B
+
+L2
+
+F
+
+A
+C
+E
+
+D
+F
+
+BFS
+F28DA 2019-20
+
+36
+
+Further reading
+❑
+
+Data Structures and Algorithms in Java, 6th
+edition, by M. T. Goodrich, R. Tamassia, and
+M. H. Goldwasser, Wiley, 2014
+◼
+
+❑
+
+Chapter 14
+
+Data Structures and Algorithm Analysis, by
+Clifford A. Shaffer, 2013
+◼
+
+Chapter 11
+
+© 2014 Goodrich, Tamassia, Goldwasser
+
+F28DA 2019-20
+
+37
+
+
