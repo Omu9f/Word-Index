@@ -80,6 +80,7 @@ overview
 The performance between the LinkedList and Hashtable implementations can be evaluated in the test folder. ListWordMapTest.java and HashWordMapTest.java both have a test named 'test10' which inserts and deletes N number of words in the map.
 
 You can uncomment these tests and modify the value of N to check the run time difference. Example evaluation result:
+
 ![alt text](/result.jpg)
 
 ---
